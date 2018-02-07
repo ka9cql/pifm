@@ -110,6 +110,7 @@ void freeRealMemPage(void* vAddr) {
 
 void setup_fm()
 {
+    printf("Initializing GPIO...\n");
 
     /* open /dev/mem */
     if ((mem_fd = open("/dev/mem", O_RDWR|O_SYNC) ) < 0) {
@@ -535,6 +536,8 @@ public:
 
 void playWav(char* filename, float samplerate, bool stereo)
 {
+    printf("Playing Wav file...\n");
+
     int fp= STDIN_FILENO;
     if(filename[0]!='-') fp = open(filename, O_RDONLY);
     
@@ -567,7 +570,7 @@ void playWav(char* filename, float samplerate, bool stereo)
 }
 
 void unSetupDMA(){
-    printf("exiting\n");
+    printf("exiting\n\n");
     struct DMAregs* DMA0 = (struct DMAregs*)&(ACCESS(DMABASE));
     DMA0->CS =1<<31;  // reset dma controller
     
@@ -664,7 +667,7 @@ int main(int argc, char **argv)
       playWav(argv[1], argc>3?atof(argv[3]):22050, argc>4);
       volume = argc>5 ? atoi(argv[5]) : 4; 
     } else
-      fprintf(stderr, "Usage:   program wavfile.wav [freq] [sample rate] [stereo] [volume]\n\nWhere wavfile is 16 bit 22.5kHz Stereo.  Set wavfile to '-' to use stdin.\nfreq is in Mhz (default 103.3)\nsample rate of wav file in Hz\nvolume is in integer (0-8; default 4)\n\nPlay an empty file to transmit silence\n");
+      fprintf(stderr, "\nUsage:   %s wavfile.wav [freq] [sample rate] [stereo] [volume]\n\nWhere wavfile is 16 bit 22.5kHz Stereo.  Set wavfile to '-' to use stdin.\nfreq is in Mhz (default 103.3)\nsample rate of wav file in Hz\nvolume is in integer (0-8; default 4)\n\nPlay an empty file to transmit silence\n\n", argv[0]);
     
     return 0;
 
