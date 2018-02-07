@@ -18,7 +18,7 @@ Now connect a 20cm or so plain wire to GPIO 4 (which is pin 7 on [header P1](htt
 
 from a [post on MAKE](http://blog.makezine.com/2012/12/10/raspberry-pi-as-an-fm-transmitter/?parent=Electronics) by Matt Richardson
 
-The antenna is optional, but range is reduced from ~100 meters to ~10cm without the antenna. The sound file must be 16 bit ~~mono~~ wav format.
+The antenna is optional, but range is reduced from ~100 meters to ~10cm without the antenna. The sound file can be 16 bit mono or stereo wav format.
 
 ### New! Now with stereo
 
