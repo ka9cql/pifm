@@ -4,7 +4,7 @@
 
 ## Turning the Raspberry Pi Zero W Into an APRS Transmitter
 
-### Steps to play sound:
+### Steps to play mono sound file:
 
 *(Created by Oliver Mattos and Oskar Weigl. Code is GPL)*
 
@@ -20,7 +20,7 @@ from a [post on MAKE](http://blog.makezine.com/2012/12/10/raspberry-pi-as-an-fm-
 
 The antenna is optional, but range is reduced from ~100 meters to ~10cm without the antenna. The sound file can be 16 bit mono or stereo wav format.
 
-### New! Now with stereo
+### Play a stereo file:
 
 ```
 sudo ./pifm left_right.wav 103.3 22050 stereo
@@ -37,17 +37,17 @@ arecord -d0 -c2 -f S16_LE -r 22050 -twav -D copy | sudo ./pifm -
 
 Run the ./pifm binary with no command line arguments to find usage.
 
-The second command line argument is the frequency to transmit on, as a number in Mhz. Eg. This will transmit on 100.0
+The second command line argument is the frequency to transmit on, as a number in Mhz. Eg. This will transmit on 100.0 Mhz
 
 > sudo ./pifm sound.wav 100.0
 
-It will work from about 1Mhz up to 250Mhz, although the useful FM band is 88 Mhz to 108 Mhz in most countries.
+It will work from about 1Mhz up to 250Mhz, although the broadcast FM band in the USA is 88.1 Mhz to 107.9 Mhz
 
-Most radio receivers want a signal to be an odd multiple of 0.1 MHz to work properly.
+Some FM radio receivers will only tune to a signal that lies on an odd multiple of .1 MHz (e.g. use 99.9 Mhz, not 99.8 or 100.0)
 
 ### The details of how it works
 
-Below is some code that was hacked together over a few hours at the [Code Club pihack](http://blog.codeclub.org.uk/blog/brief/). It uses the hardware on the raspberry pi that is actually meant to generate spread-spectrum clock signals on the GPIO pins to output FM Radio energy. This means that all you need to do to turn the Raspberry-Pi into a (ridiculously powerful) FM Transmitter is to plug in a wire as the antenna (as little as 20cm will do) into GPIO pin 4 and run the code posted below. It transmits on 100.0 MHz.
+The code was hacked together over a few hours at the [Code Club pihack](http://blog.codeclub.org.uk/blog/brief/). It uses the hardware on the raspberry pi that is actually meant to generate spread-spectrum clock signals on the GPIO pins to output FM Radio energy. This means that all you need to do to turn the Raspberry-Pi into a (ridiculously powerful) FM Transmitter is to plug in a wire as the antenna (as little as 20cm will do) into GPIO pin 4 and run the code posted below. It transmits on 100.0 MHz.
 
 When testing, the signal only started to break up after we went through several conference rooms with heavy walls, at least 50m away, and crouched behind a heavy metal cabinet. The sound quality is ok, but not amazing, as it currently plays some clicks when the CPU gets switched away to do anything else than play the music. We made a kernel mode driver that used the DMA controller to offload the CPU and play smooth music without loading the CPU. DMA from userspace is awesome and awful at the same time!
 
@@ -60,10 +60,12 @@ Modulation is done by adjusting the frequency using the fractional divider betwe
 
 ### Notes
 
-This is a copy of the updated documentation and code from 
+This is a copy of the original material from 
 http://www.icrobotics.co.uk/wiki/index.php/Turning_the_Raspberry_Pi_Into_an_FM_Transmitter, 
 
-The only changes are removal of the download link (since the source can be downloaded here), and formatting in Github Markdown.
+The changes here have been made in order to adapt this project for both the Pi Zero W, and for transmitting APRS on United States 2 meter ham radio frequencies.
+
+NOTE: YOU CAN NOT USE THIS CODE UNLESS YOU ARE A LICENSED AMATEUR RADIO OPERATOR with operating privileges in the US 2 meter ham radio band.  PERIOD!
 
 All rights of the original authors reserved.
 
