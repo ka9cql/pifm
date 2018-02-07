@@ -14,7 +14,7 @@ sudo python
 >>> PiFm.play_sound("sound.wav")
 ```
 
-Now connect a 20cm or so plain wire to GPIO 4 (which is pin 7 on [header P1](http://elinux.org/RPi_Low-level_peripherals#General_Purpose_Input.2FOutput_.28GPIO.29)) to act as an antenna, and tune an FM radio to 103.3Mhz
+Now connect a 20cm or so plain wire to GPIO 4 (which is pin 7 on [the Pi Zero W header](https://cdn.sparkfun.com/assets/learn_tutorials/6/7/6/PiZero_1.pdf)) to act as an antenna, and tune an FM radio to 103.3Mhz
 
 from a [post on MAKE](http://blog.makezine.com/2012/12/10/raspberry-pi-as-an-fm-transmitter/?parent=Electronics) by Matt Richardson
 
