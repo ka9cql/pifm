@@ -6,7 +6,9 @@
 # 11025 hz stereo divided by two
 SAMP_RATE=5512
 
-# 102.3 Mhz FM
+# Frequency in Megahertz (Mhz)
+#   E.G. 107.1 = Mhz FM
+#FREQ=107.1
 FREQ=102.3
 
 # 1102 hz sample rate, stereo, 16-bit files -
