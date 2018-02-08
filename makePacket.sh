@@ -44,6 +44,13 @@ rm -f $AUDIO_FILE
 gen_packets -o packet.Loc.wav -r 44100 aprs.dat
 
 
+# Test the result to see if it worked -
+echo
+echo "Testing encoding..."
+atest packet.Loc.wav
+echo
+
+
 # Reset the screen (direwolf insists on changing its fg/bg colors!)
 #tput reset
 
