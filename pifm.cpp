@@ -1,6 +1,6 @@
 // To run:
 //  g++ -O3 -o pifm pifm.c
-//  ./pifm left_right.wav 144.39 22050 stereo
+//  ./pifm left_right.wav 144.39 44100 stereo
 //  ./pifm sound.wav
 
 // Created by Oliver Mattos and Oskar Weigl.
@@ -664,10 +664,10 @@ int main(int argc, char **argv)
     if (argc>1) {
       setup_fm();
       setupDMA(argc>2?atof(argv[2]):144.39);
-      playWav(argv[1], argc>3?atof(argv[3]):22050, argc>4 ? (strcmp("stereo",argv[4]) == 0) : 0);
+      playWav(argv[1], argc>3?atof(argv[3]):44100, argc>4 ? (strcmp("stereo",argv[4]) == 0) : 0);
       volume = argc>5 ? atoi(argv[5]) : 4; 
     } else
-      fprintf(stderr, "\nUsage:   %s wavfile.wav [freq] [sample rate] [stereo | mono] [volume]\n\nWhere wavfile is 16 bit 22.5kHz Stereo.  Set wavfile to '-' to use stdin.\nfreq is in Mhz (default 144.39)\nsample rate of wav file in Hz\nvolume is in integer (0-8; default 4)\n\nPlay an empty file to transmit silence\n\n", argv[0]);
+      fprintf(stderr, "\nUsage:   %s wavfile.wav [freq] [sample rate] [stereo | mono] [volume]\n\nWhere wavfile defaults to 16 bit 44.1kHz mono.  Set wavfile to '-' to use stdin.\nfreq is in Mhz (default 144.39)\nsample rate of wav file in Hz\nvolume is in integer (0-8; default 4)\n\nPlay an empty file to transmit silence\n\n", argv[0]);
     
     return 0;
 
