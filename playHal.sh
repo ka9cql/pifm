@@ -17,9 +17,9 @@ FREQ=102.3
 
 echo
 
-for A in `ls Hal*.wav`
+for A in `ls sounds/Hal*.wav`
 do
-	echo "Playing file  ${A}..."
+	echo "Playing file  ${A} on ${FREQ} Mhz..."
 	pifm $A ${FREQ} ${SAMP_RATE} stereo
 done
 
