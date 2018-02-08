@@ -12,8 +12,8 @@ SAMP_RATE=44100
 FORMAT=""
 
 # Frequency in Megahertz (Mhz)
-#   E.G. 144.390 = Mhz FM
-#FREQ=144.390
+#   E.G. 144.390 = Mhz FM (+ a little offset...?)
+#FREQ=144.394
 FREQ=102.3
 
 
@@ -22,7 +22,7 @@ FREQ=102.3
 
 echo
 
-for FREQ in 144.390 102.3
+for FREQ in 144.394 102.3
 do
     for A in `ls packet*.wav`
     do

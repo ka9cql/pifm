@@ -590,7 +590,8 @@ void setupDMA( float centerFreq ){
    // allocate a few pages of ram
    getRealMemPage(&constPage.v, &constPage.p);
    
-   int centerFreqDivider = (int)((500.0 / centerFreq) * (float)(1<<12) + 0.5);
+   // NOTE: Changing the divisor here changes the bandwidth of the resulting signal
+   int centerFreqDivider = (int)(((500.0 / centerFreq) * (float)(1<<12) + 0.5)/0.125); // Divide here to reduce bandwidth
    
    // make data page contents - it's essientially 1024 different commands for the
    // DMA controller to send to the clock module at the correct time.
