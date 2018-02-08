@@ -28,6 +28,7 @@ do
     do
 	echo "Playing file  ${A} on ${FREQ} Mhz..."
 	pifm $A ${FREQ} ${SAMP_RATE} ${FORMAT}
+	sleep 2
     done
 done
 
