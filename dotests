@@ -1,0 +1,30 @@
+#!/bin/sh
+####################
+# run some tests on APRS packet generation
+####################
+
+rm -f z.txt
+echo "KA9CQL-2>APRS:@080749z3449.27N/11740.79W$" >> z.txt
+echo "KA9CQL-2>APRS,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
+echo "KA9CQL-2>APRS:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+echo "KA9CQL-2>APRS,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+echo "KA9CQL-2>APRS,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+echo "KA9CQL-2>BEACON:@080749z3449.27N/11740.79W$" >> z.txt
+echo "KA9CQL-2>BEACON,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
+echo "KA9CQL-2>WIDE1-1,BEACON:@080749z3449.27N/11740.79W$" >> z.txt
+echo "KA9CQL-2>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+echo "KA9CQL-2>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+echo "KA9CQL-2>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+
+echo "KA9CQL-2>APDW12:#Test packet" >> z.txt
+
+gen_packets -o z.wav z.txt
+atest z.wav
+
+echo
+echo "To play the file you just built, do this - "
+echo "pifm z.wav 144.394157 44100 mono 4"
+echo
+
+exit 0
+

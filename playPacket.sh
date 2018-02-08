@@ -9,28 +9,33 @@
 
 # 44100 hz mono
 SAMP_RATE=44100
-FORMAT=""
+FORMAT="mono"
 
 # Frequency in Megahertz (Mhz)
-#   E.G. 144.390 = Mhz FM (+ a little offset...?)
-#FREQ=144.394
-FREQ=102.3
+#   E.G. 144.390 = Mhz FM (+/- a little offset...?)
+#FREQ=144.39415		# EVER, EVER, ever so slightly low...
+FREQ=144.394157
+#FREQ=102.3
 
 
 # 44100 hz sample rate, 16-bit files -
 #  packet.16bit.wav
 
+# NOTE: FOR NOW - DO NOT - raise the volume above 4!
+VOLUME=4
+
+
 echo
 
-for FREQ in 144.394 102.3
-do
+#for FREQ in 144.394 102.3
+#do
     for A in `ls packet*.wav`
     do
 	echo "Playing file  ${A} on ${FREQ} Mhz..."
-	pifm $A ${FREQ} ${SAMP_RATE} ${FORMAT}
-	sleep 2
+	pifm $A ${FREQ} ${SAMP_RATE} ${FORMAT} ${VOLUME}
+#	sleep 2
     done
-done
+#done
 
 echo
 

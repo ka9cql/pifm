@@ -38,15 +38,15 @@
 
 #define PI 3.14159265
 
-int  mem_fd;
+int  mem_fd=-1;
 char *gpio_mem, *gpio_map;
 char *spi0_mem, *spi0_map;
 int volume = 4;
 
 
 // I/O access
-volatile unsigned *gpio;
-volatile unsigned *allof7e;
+volatile unsigned *gpio=NULL;
+volatile unsigned *allof7e=NULL;
 
 // GPIO setup macros. Always use INP_GPIO(x) before using OUT_GPIO(x) or SET_GPIO_ALT(x,y)
 #define INP_GPIO(g) *(gpio+((g)/10)) &= ~(7<<(((g)%10)*3))
@@ -132,6 +132,31 @@ void setup_fm()
     SETBIT(GPFSEL0 , 14);
     CLRBIT(GPFSEL0 , 13);
     CLRBIT(GPFSEL0 , 12);
+
+ 
+    struct GPCTL setupword = {6/*SRC*/, 1, 0, 0, 0, 1,0x5a};
+
+    ACCESS(CM_GP0CTL) = *((int*)&setupword);
+}
+
+
+void teardown_fm()
+{
+    printf("Restoring GPIO...\n");
+
+    if (mem_fd < 0) {
+        // Nothing to do
+        return;
+    }
+    
+    if (allof7e == NULL || (int)allof7e==-1) {
+        printf("ERROR: mmap pointer invalid during shutdown!\n");
+	exit(-1);
+    }
+
+    CLRBIT(GPFSEL0 , 14);
+    SETBIT(GPFSEL0 , 13);
+    SETBIT(GPFSEL0 , 12);
 
  
     struct GPCTL setupword = {6/*SRC*/, 1, 0, 0, 0, 1,0x5a};
@@ -591,7 +616,8 @@ void setupDMA( float centerFreq ){
    getRealMemPage(&constPage.v, &constPage.p);
    
    // NOTE: Changing the divisor here changes the bandwidth of the resulting signal
-   int centerFreqDivider = (int)(((500.0 / centerFreq) * (float)(1<<12) + 0.5)/0.125); // Divide here to reduce bandwidth
+									// NOTES:  Dividing by 0.125 is just a touch too wide!
+   int centerFreqDivider = (int)(((500.0 / centerFreq) * (float)(1<<12) + 0.5)/0.100); // Divide here to reduce bandwidth
    
    // make data page contents - it's essientially 1024 different commands for the
    // DMA controller to send to the clock module at the correct time.
@@ -663,10 +689,12 @@ int main(int argc, char **argv)
 {
     
     if (argc>1) {
+      volume = argc>5 ? atoi(argv[5]) : 4; 
       setup_fm();
+      usleep(25000); // Let the oscilltor settle for a bit...
       setupDMA(argc>2?atof(argv[2]):144.39);
       playWav(argv[1], argc>3?atof(argv[3]):44100, argc>4 ? (strcmp("stereo",argv[4]) == 0) : 0);
-      volume = argc>5 ? atoi(argv[5]) : 4; 
+      teardown_fm();
     } else
       fprintf(stderr, "\nUsage:   %s wavfile.wav [freq] [sample rate] [stereo | mono] [volume]\n\nWhere wavfile defaults to 16 bit 44.1kHz mono.  Set wavfile to '-' to use stdin.\nfreq is in Mhz (default 144.39)\nsample rate of wav file in Hz\nvolume is in integer (0-8; default 4)\n\nPlay an empty file to transmit silence\n\n", argv[0]);
     
