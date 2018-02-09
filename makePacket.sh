@@ -15,7 +15,7 @@ TIME_Z="072256"
 LAT="3429.57N"
 
 # Longitude, format: hhh.mmssssss.00W (or hhh.mmssssss.00E)
-LAT="117.40867600.00W"
+LON="117.40867600.00W"
 
 # Altitude in feet ASL, format: nnnnnn
 ALT="003285"
