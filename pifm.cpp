@@ -617,7 +617,7 @@ void setupDMA( float centerFreq ){
    
    // NOTE: Changing the divisor here changes the bandwidth of the resulting signal
 									// NOTES:  Dividing by 0.125 is just a touch too wide!
-									//         Dividing by 0.100 resulted in 4-5 out of 6 successful decodes!
+									//         Dividing by 0.100 resulted in successful decodes!
    int centerFreqDivider = (int)(((500.0 / centerFreq) * (float)(1<<12) + 0.5)/0.100); // Divide here to reduce bandwidth
    
    // make data page contents - it's essientially 1024 different commands for the
@@ -695,6 +695,9 @@ int main(int argc, char **argv)
       usleep(25000); // Let the oscilltor settle for a bit...
       setupDMA(argc>2?atof(argv[2]):144.39);
       playWav(argv[1], argc>3?atof(argv[3]):44100, argc>4 ? (strcmp("stereo",argv[4]) == 0) : 0);
+      // TO-DO: Figure out how to shut down after playing packet; it seems if we only try to
+      //        play one APRS sentence, the packet does not get properly encoded. So I always
+      //        have to add a "junk" sentence at the end, just to "flush" out the "good" one.
       teardown_fm();
     } else
       fprintf(stderr, "\nUsage:   %s wavfile.wav [freq] [sample rate] [stereo | mono] [volume]\n\nWhere wavfile defaults to 16 bit 44.1kHz mono.  Set wavfile to '-' to use stdin.\nfreq is in Mhz (default 144.39)\nsample rate of wav file in Hz\nvolume is in integer (0-8; default 4)\n\nPlay an empty file to transmit silence\n\n", argv[0]);
