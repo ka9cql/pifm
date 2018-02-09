@@ -32,7 +32,9 @@ echo
     for A in `ls packet*.wav`
     do
 	echo "Playing file  ${A} on ${FREQ} Mhz..."
-	pifm $A ${FREQ} ${SAMP_RATE} ${FORMAT} ${VOLUME}
+	cmd=`echo pifm $A ${FREQ} ${SAMP_RATE} ${FORMAT} ${VOLUME}`
+	echo "Command Line: [$cmd]"
+	$cmd
 #	sleep 2
     done
 #done
