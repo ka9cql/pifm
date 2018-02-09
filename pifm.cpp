@@ -617,6 +617,7 @@ void setupDMA( float centerFreq ){
    
    // NOTE: Changing the divisor here changes the bandwidth of the resulting signal
 									// NOTES:  Dividing by 0.125 is just a touch too wide!
+									//         Dividing by 0.100 resulted in 4-5 out of 6 successful decodes!
    int centerFreqDivider = (int)(((500.0 / centerFreq) * (float)(1<<12) + 0.5)/0.100); // Divide here to reduce bandwidth
    
    // make data page contents - it's essientially 1024 different commands for the
