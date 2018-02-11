@@ -3,22 +3,52 @@
 # makePacket.sh - Create the audio output file for an APRS position report
 ######################
 
+# All last-known-good data will be written to files in the following directory -
+LAST_KNOWN_GOOD_DIR=/usr/local/bin
+
+
 AUDIO_FILE="packet.Loc.wav"
 
-# Your callsign (MANDATORY!)
-CALLSIGN="KA9CQL-2"
+VERBOSE="1"
 
-# Time in Zulu, format: ddhhmm
-TIME_Z="072256"
+if [ $# -ge 1 -a ""$1"" = "-q" ]
+then
+	#echo
+	#echo "DEBUG: QUIET MODE"
+	VERBOSE="0"
+fi
+
+
+
+# Your callsign (MANDATORY!)
+MYCALL="KA9CQL-2"
+# Desired -
+# ZULU_DDHHMM="110736"
+ZULU_DDHHMM=`date "+%d%H%M"`
 
 # Latitude, format: hhmm.ssN (or  hhmm.ssS)
-LAT="3429.57N"
+# Desired -
+#LAT="3429.57N"
+# What is in the last-known-good file -
+# 34.492745,N
+LAT=`cat ${LAST_KNOWN_GOOD_DIR}/lat | awk -F"," '{ printf "%4.2f%s",($1*100),toupper($2); }'`
 
 # Longitude, format: hhh.mmssssss.00W (or hhh.mmssssss.00E)
-LON="117.40867600.00W"
+# Desired -
+# LON="11740.87W"
+# What is in the last-known-good file -
+# 117.407627,W
+LON=`cat ${LAST_KNOWN_GOOD_DIR}/lon | awk -F"," '{ printf "%5.2f%s",($1*100),toupper($2); }'`
 
 # Altitude in feet ASL, format: nnnnnn
-ALT="003285"
+# Desired -
+# ALT="003285"
+# What is in the last-known-good file -
+# 985.10,M
+ALT=`cat ${LAST_KNOWN_GOOD_DIR}/alt | awk -F"," '{ printf "%06d",int($1*3.3); }'`
+
+# Temperature (degrees F)
+DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %s",$3,toupper($4); }'`
 
 # Course (heading), in degrees format: ddd
 HDG="090"
@@ -27,34 +57,66 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="WarPig-II Position report"
+MSG="WarPig-II telemetry "
 
 
 rm -f $AUDIO_FILE
+rm -f z.txt
+
+# aprs.dat file contents - 
+## KA9CQL-2>APNXXX:#First test packet
+## KA9CQL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79WOWarpig-II balloon/A=003285
+## KA9CQL-2>APNXXX:#Next-to-last test packet
+## KA9CQL-2>APNXXX:#Last test packet
 
 
 ## USING APRS (can't yet get or build it for Pi Zero...) -
-## aprs -c ${CALLSIGN} -o AUDIO_FILE "/${TIME_Z}z${LAT}/${LON}>${HDG}/${SPD}${MSG}/A=${ALT}"
+## aprs -c ${MYCALL} -o AUDIO_FILE "/${ZULU_DDHHMM}z${LAT}/${LON}>${HDG}/${SPD}${MSG}/A=${ALT} ${DEGF}"
 
 
 ## Using direwolf -
-## NOTE: MUST HAVE direwolf.conf FILE SET UP WITH YOUR CALL, etc.!!!
 ########
 ##gen_packets -o packet.Loc.wav -r 44100 aprs.dat
-gen_packets -o packet.Loc.wav -r 44100 aprs.dat
+
+echo "${MYCALL}>APNXXX:#First test packet" >> z.txt
+
+## THE FOLLOWING WORKED, GREAT! -
+echo "${MYCALL}>APNXXX:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>APNXXX,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>APNXXX,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+
+## FOR SOME REASON, the last packet does not seem to send properly, so put one or two more with "gibberish" to flush the others
+echo "${MYCALL}>APNXXX:#Next-to-last test packet" >> z.txt
+echo "${MYCALL}>APNXXX:#Last test packet" >> z.txt
+
+gen_packets -o ${AUDIO_FILE} -r 44100 z.txt
 
 
-# Test the result to see if it worked -
-echo
-echo "Testing encoding..."
-atest packet.Loc.wav
-echo
+if [ ""$VERBOSE"" = "1" ]
+then
+	# Test the result to see if it worked -
+	echo
+	echo "Testing encoding..."
+	atest ${AUDIO_FILE}
+	echo
+
+	echo
+	echo "To transmit the file you just built over the air as 2m APRS"
+	echo "position reports, do this - "
+	echo
+	echo "    pifm ${AUDIO_FILE} 144.394157 44100 mono 4"
+	echo
+fi
 
 
 # Reset the screen (direwolf insists on changing its fg/bg colors!)
 #tput reset
 
 exit 0
+
 
 Usage: gen_packets [options] [file]
 Options:

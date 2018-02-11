@@ -4,7 +4,9 @@
 ####################
 
 MYCALL="KA9CQL-2"
-ZULU_DDHHMM="091024"
+# Desired -
+# ZULU_DDHHMM="091024"
+ZULU_DDHHMM=`date "+%d%H%M"`
 LAT_DDMMxSS="3449.27"
 LAT_NS="N"
 LON_DDDMMxSS="11740.79"

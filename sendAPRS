@@ -1,0 +1,22 @@
+#!/bin/sh
+###########################
+# sendAPRS - Start trying to send APRS position reports over 2m
+#
+# HISTORICAL INFORMATION -
+#
+#  2018-02-10  msipin  Created
+###########################
+
+PATH=.:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/pifm
+export PATH
+
+cd /home/pifm
+
+while [ 1 ]
+do
+	/home/pifm/makePacket.sh -q
+	/home/pifm/pifm /home/pifm/packet.Loc.wav 144.394157 44100 mono 4 2>&1 > /dev/null
+	sleep 43
+done 2>&1 >> /home/pifm/aprs.log
+
+exit 0
