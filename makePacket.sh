@@ -66,6 +66,8 @@ rm -f z.txt
 # aprs.dat file contents - 
 ## KA9CQL-2>APNXXX:#First test packet
 ## KA9CQL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79WOWarpig-II balloon/A=003285
+## KA9CQL-2>APNXXX,WIDE2-2:/090738z3449.27N/11740.79WOWarpig-II balloon/A=003285
+## KA9CQL-2>APNXXX,WIDE3-3:/090738z3449.27N/11740.79WOWarpig-II balloon/A=003285
 ## KA9CQL-2>APNXXX:#Next-to-last test packet
 ## KA9CQL-2>APNXXX:#Last test packet
 
@@ -86,6 +88,7 @@ echo "${MYCALL}>APNXXX,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${D
 echo "${MYCALL}>APNXXX,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 echo "${MYCALL}>BEACON:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE3-3:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ## FOR SOME REASON, the last packet does not seem to send properly, so put one or two more with "gibberish" to flush the others

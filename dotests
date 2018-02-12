@@ -29,6 +29,7 @@ rm -f z.txt
 #  echo "KA9CQL-2>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
 #  echo "KA9CQL-2>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
 #  echo "KA9CQL-2>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+#  echo "KA9CQL-2>BEACON,WIDE3-3:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
 #  echo "KA9CQL-2>APDW12:#Test packet" >> z.txt
 #
 # gen_packets -o z.wav z.txt
@@ -49,6 +50,7 @@ echo "${MYCALL}>APNXXX,WIDE1-1:/${ZULU_DDHHMM}z${LAT_DDMMxSS}${LAT_NS}/${LON_DDD
 echo "${MYCALL}>APNXXX,WIDE2-2:/${ZULU_DDHHMM}z${LAT_DDMMxSS}${LAT_NS}/${LON_DDDMMxSS}${LON_WE}O${MSG}/A=${ALT}" >> z.txt
 echo "${MYCALL}>BEACON:/${ZULU_DDHHMM}z${LAT_DDMMxSS}${LAT_NS}/${LON_DDDMMxSS}${LON_WE}O${MSG}/A=${ALT}" >> z.txt
 echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT_DDMMxSS}${LAT_NS}/${LON_DDDMMxSS}${LON_WE}O${MSG}/A=${ALT}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE3-3:/${ZULU_DDHHMM}z${LAT_DDMMxSS}${LAT_NS}/${LON_DDDMMxSS}${LON_WE}O${MSG}/A=${ALT}" >> z.txt
 echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT_DDMMxSS}${LAT_NS}/${LON_DDDMMxSS}${LON_WE}O${MSG}/A=${ALT}" >> z.txt
 
 ## FOR SOME REASON, the last packet does not seem to send properly, so put one or two more with "gibberish" to flush the others
