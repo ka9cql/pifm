@@ -1,11 +1,21 @@
-
+#!/bin/sh
 ######################
 # makePacket.sh - Create the audio output file for an APRS position report
+#
+# HISTORICAL INFORMATION -
+#
+#  2018-02-12  msipin  (Circa) - Created.
+#  2018-02-20  msipin  Ensured leading zeros in lat and lon. Added ability to convert some
+#                      GPS's "non-NMEA" (aka decimal) LAT/LON values into NMEA-compatible
+#                      format.
 ######################
 
 # All last-known-good data will be written to files in the following directory -
 LAST_KNOWN_GOOD_DIR=/usr/local/bin
 
+# If need to convert GPS output to "NMEA-compatible" format, set the following
+# variable to "1". IF NOT, set it to "0" -
+GPS_TO_NMEA=0	# NOTE: "ORIG GPS's" = 0, "Microcenter GPS" =1
 
 AUDIO_FILE="packet.Loc.wav"
 
@@ -31,14 +41,47 @@ ZULU_DDHHMM=`date "+%d%H%M"`
 #LAT="3429.57N"
 # What is in the last-known-good file -
 # 34.492745,N
-LAT=`cat ${LAST_KNOWN_GOOD_DIR}/lat | awk -F"," '{ printf "%4.2f%s",($1*100),toupper($2); }'`
+##echo "DEBUG: READ-LAT: `cat ${LAST_KNOWN_GOOD_DIR}/lat`"
+# If need to convert GPS format to "NMEA format"...
+if [ ""$GPS_TO_NMEA"" = "1" ]
+then
+    DEG=`cat ${LAST_KNOWN_GOOD_DIR}/lat | awk -F"," '{ printf "%d",int($1); }'`
+    PRT=`cat ${LAST_KNOWN_GOOD_DIR}/lat | awk -F"," '{ printf "%.4f",($1-int($1)); }'`
+    MIN=`echo ${PRT} | awk '{ printf "%2.4f",($1*60.0); }'`
+    N_S=`cat ${LAST_KNOWN_GOOD_DIR}/lat | awk -F"," '{ print $2 }'`
+    ##echo "DEBUG: DEG: ${DEG}"
+    ##echo "DEBUG: PRT: ${PRT}"
+    ##echo "DEBUG: MIN: ${MIN}"
+    ##echo "DEBUG: N_S: ${N_S}"
+    LAT=`echo ${DEG} ${MIN} ${N_S} | awk '{ printf "%04d.%02d%s",int($1*100+$2),int((($1*100+$2)-int($1*100+$2))*100),toupper($3); }'`
+else
+    LAT=`cat ${LAST_KNOWN_GOOD_DIR}/lat | awk -F"," '{ printf "%04d.%02d%s",int($1*100),int((($1*100)-int($1*100))*100),toupper($2); }'`
+fi
+##echo "DEBUG:      LAT: ${LAT}"
 
 # Longitude, format: hhh.mmssssss.00W (or hhh.mmssssss.00E)
 # Desired -
 # LON="11740.87W"
 # What is in the last-known-good file -
 # 117.407627,W
-LON=`cat ${LAST_KNOWN_GOOD_DIR}/lon | awk -F"," '{ printf "%5.2f%s",($1*100),toupper($2); }'`
+##echo "DEBUG: READ-LON: `cat ${LAST_KNOWN_GOOD_DIR}/lon`"
+# If need to convert GPS format to "NMEA format"...
+if [ ""$GPS_TO_NMEA"" = "1" ]
+then
+    DEG=`cat ${LAST_KNOWN_GOOD_DIR}/lon | awk -F"," '{ printf "%d",int($1); }'`
+    PRT=`cat ${LAST_KNOWN_GOOD_DIR}/lon | awk -F"," '{ printf "%.4f",($1-int($1)); }'`
+    MIN=`echo ${PRT} | awk '{ printf "%2.4f",($1*60.0); }'`
+    E_W=`cat ${LAST_KNOWN_GOOD_DIR}/lon | awk -F"," '{ print $2 }'`
+    ##echo "DEBUG: DEG: ${DEG}"
+    ##echo "DEBUG: PRT: ${PRT}"
+    ##echo "DEBUG: MIN: ${MIN}"
+    ##echo "DEBUG: E_W: ${E_W}"
+    LON=`echo ${DEG} ${MIN} ${E_W} | awk '{ printf "%05d.%02d%s",int($1*100+$2),int((($1*100+$2)-int($1*100+$2))*100),toupper($3); }'`
+else
+    LON=`cat ${LAST_KNOWN_GOOD_DIR}/lon | awk -F"," '{ printf "%05d.%02d%s",int($1*100),int((($1*100)-int($1*100))*100),toupper($2); }'`
+fi
+##echo "DEBUG:      LON: ${LON}"
+
 
 # Altitude in feet ASL, format: nnnnnn
 # Desired -
