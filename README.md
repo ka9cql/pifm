@@ -14,16 +14,16 @@ sudo python
 >>> PiFm.play_sound("sound.wav")
 ```
 
-Now connect an 18 inch or so piece of plain wire to GPIO 4 (which is pin 7 on [the Pi Zero W header](https://cdn.sparkfun.com/assets/learn_tutorials/6/7/6/PiZero_1.pdf)) to act as an antenna, and tune an FM radio to 103.3Mhz
+Now connect a 19.2-inch (19-and-3/16 inch) piece of plain wire to GPIO 4 (which is pin 7 on [the Pi Zero W header](https://cdn.sparkfun.com/assets/learn_tutorials/6/7/6/PiZero_1.pdf)) to act as an antenna, and tune a 2-meter FM ham radio to 144.390Mhz
 
 from a [post on MAKE](http://blog.makezine.com/2012/12/10/raspberry-pi-as-an-fm-transmitter/?parent=Electronics) by Matt Richardson
 
-The antenna is optional, but range is reduced from ~100 meters to ~10cm without the antenna. The sound file can be 16 bit mono or stereo wav format.
+The sound file can be 16 bit mono or stereo wav format.
 
 ### Play a stereo file:
 
 ```
-sudo ./pifm left_right.wav 103.3 22050 stereo
+sudo ./pifm left_right.wav 144.390 22050 stereo
 
 # Example command lines
 # play an MP3
@@ -37,17 +37,15 @@ arecord -d0 -c2 -f S16_LE -r 22050 -twav -D copy | sudo ./pifm -
 
 Run the ./pifm binary with no command line arguments to find usage.
 
-The second command line argument is the frequency to transmit on, as a number in Mhz. Eg. This will transmit on 100.0 Mhz
+The second command line argument is the frequency to transmit on, as a number in Mhz. Eg. This will transmit on 144.390 Mhz
 
-> sudo ./pifm sound.wav 100.0
+> sudo ./pifm sound.wav 144.390
 
-It will work from about 1Mhz up to 250Mhz, although the broadcast FM band in the USA is 88.1 Mhz to 107.9 Mhz
-
-Some FM radio receivers will only tune to a signal that lies on an odd multiple of .1 MHz (e.g. use 99.9 Mhz, not 99.8 or 100.0)
+It will work from about 1Mhz up to 250Mhz, although the 2-meter ham radio band in the USA is 144.0 Mhz to 146.0 Mhz
 
 ### The details of how it works
 
-The code was hacked together over a few hours at the [Code Club pihack](http://blog.codeclub.org.uk/blog/brief/). It uses the hardware on the raspberry pi that is actually meant to generate spread-spectrum clock signals on the GPIO pins to output FM Radio energy. This means that all you need to do to turn the Raspberry-Pi into a (ridiculously powerful) FM Transmitter is to plug in a wire as the antenna (as little as 20cm will do) into GPIO pin 4 and run the code posted below. It transmits on 100.0 MHz.
+The code was hacked together over a few hours at the [Code Club pihack](http://blog.codeclub.org.uk/blog/brief/). It uses the hardware on the raspberry pi that is actually meant to generate spread-spectrum clock signals on the GPIO pins to output FM Radio energy. This means that all you need to do to turn the Raspberry-Pi into a (ridiculously powerful) FM Transmitter is to plug in a wire as the antenna (as little as 20cm will do) into GPIO pin 4 and run the code posted below. It transmits on 144.390 MHz.
 
 When testing, the signal only started to break up after we went through several conference rooms with heavy walls, at least 50m away, and crouched behind a heavy metal cabinet. The sound quality is ok, but not amazing, as it currently plays some clicks when the CPU gets switched away to do anything else than play the music. We made a kernel mode driver that used the DMA controller to offload the CPU and play smooth music without loading the CPU. DMA from userspace is awesome and awful at the same time!
 
