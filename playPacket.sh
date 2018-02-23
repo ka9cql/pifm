@@ -14,7 +14,8 @@ FORMAT="mono"
 # Frequency in Megahertz (Mhz)
 #   E.G. 144.390 = Mhz FM (+/- a little offset...?)
 #FREQ=144.39415		# EVER, EVER, ever so slightly low...
-FREQ=144.394157
+FREQ=144.394157		# Seems (visually on waterfall) properly centered
+#FREQ=144.390		# Did *NOT* get decoded on direwolf...
 #FREQ=102.3
 
 

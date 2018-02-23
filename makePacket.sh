@@ -123,7 +123,7 @@ rm -f z.txt
 ########
 ##gen_packets -o packet.Loc.wav -r 44100 aprs.dat
 
-echo "${MYCALL}>APNXXX:#First test packet" >> z.txt
+#echo "${MYCALL}>APNXXX:#First test packet" >> z.txt
 
 ## THE FOLLOWING WORKED, GREAT! -
 echo "${MYCALL}>APNXXX:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
@@ -133,9 +133,10 @@ echo "${MYCALL}>BEACON:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >>
 echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 echo "${MYCALL}>BEACON,WIDE3-3:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>WIDE1-1,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ## FOR SOME REASON, the last packet does not seem to send properly, so put one or two more with "gibberish" to flush the others
-echo "${MYCALL}>APNXXX:#Next-to-last test packet" >> z.txt
+#echo "${MYCALL}>APNXXX:#Next-to-last test packet" >> z.txt
 echo "${MYCALL}>APNXXX:#Last test packet" >> z.txt
 
 gen_packets -o ${AUDIO_FILE} -r 44100 z.txt

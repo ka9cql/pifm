@@ -10,12 +10,18 @@
 PATH=.:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/pifm
 export PATH
 
+# Frequency in Megahertz (Mhz)
+#   E.G. 144.390 = Mhz FM (+/- a little offset...?)
+#FREQ=144.39415		# EVER, EVER, ever so slightly low...
+FREQ=144.394157		# Seems (visually on waterfall) properly centered
+#FREQ=144.390		# Did *NOT* get decoded on direwolf...
+
 cd /home/pifm
 
 while [ 1 ]
 do
 	/home/pifm/makePacket.sh -q
-	/home/pifm/pifm /home/pifm/packet.Loc.wav 144.394157 44100 mono 4 2>&1 > /dev/null
+	/home/pifm/pifm /home/pifm/packet.Loc.wav ${FREQ} 44100 mono 4 2>&1 > /dev/null
 	sleep 43
 done 2>&1 >> /home/pifm/aprs.log
 
