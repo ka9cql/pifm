@@ -616,9 +616,33 @@ void setupDMA( float centerFreq ){
    getRealMemPage(&constPage.v, &constPage.p);
    
    // NOTE: Changing the divisor here changes the bandwidth of the resulting signal
-									// NOTES:  Dividing by 0.125 is just a touch too wide!
-									//         Dividing by 0.100 resulted in successful decodes!
-   int centerFreqDivider = (int)(((500.0 / centerFreq) * (float)(1<<12) + 0.5)/0.100); // Divide here to reduce bandwidth
+									// NOTES:  The next two observations were purely guessing using a
+									//         cheap SDR dongle, and no insight into the waveform -
+									// OBS 1:  Dividing by 0.125 is just a touch too wide!
+									// OBS 2:  Dividing by 0.100 resulted in successful decodes!
+   // NOTES: The following observations were made using the SDRPlay v2, and the SDRUno software, paying close attention to the
+   //        comparison between real, "live" signals and the waveform of my transmitted signal, including total envelope and all
+   //        peaks, etc.
+   // --------------------------------
+   //         Dividing by 0.010 removed the 4 groupings altogether
+   //         Dividing by 0.020 envelope similar to real signals; 4 distinct groups, nothing above or below (good). But nothing inbetween (??)
+   //         Dividing by 0.030 didn't emit anything
+   //         Dividing by 0.040 seemed to "spread out" the signal, not like 0.020's distince edges
+   //         Dividing by 0.050 brought us closer to 0.020 vs 0.40. There were four distince bands, but a lot of signal between and beyond them
+   //         Dividing by 0.060 didn't emit anything
+   //         Dividing by 0.080 didn't emit anything
+   //         Dividing by 0.100 spread the signal out, but made "groupings" much more apparent
+   //         Dividing by 0.125 spread the signal out all over the envelope, with no discernable bounds, although about 4 "groupings"
+   //
+   // 144.39454 CF with divider of 0.200 seems very, VERY close in terms of groupings, bandings and waterfall display. Note however that
+   //           the envelope changes significantly if I add a single amplifier, and banding gets obliterated if I add two.
+   //
+   // 144.3941  CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear. It does introduce
+   //           "spray" above and below outermost freqs, but might leave enough energy in "expected" bands to promote decoding.
+   //
+   // 144.39454 with 0.020 and no amplifier looks IDENTICAL to live signals. Adding an amplifier seems to flatten the envelope significantly
+   //
+   int centerFreqDivider = (int)(((500.0 / centerFreq) * (float)(1<<12) + 0.5)/0.1000); // Divide here to reduce bandwidth
    
    // make data page contents - it's essientially 1024 different commands for the
    // DMA controller to send to the clock module at the correct time.

@@ -16,7 +16,7 @@ LAST_KNOWN_GOOD_DIR=/usr/local/bin
 
 # If need to convert GPS output to "NMEA-compatible" format, set the following
 # variable to "1". IF NOT, set it to "0" -
-GPS_TO_NMEA=0	# NOTE: "ORIG GPS's" = 0, "Microcenter GPS" =1
+GPS_TO_NMEA=1	# NOTE: "ORIG GPS's" = 0, "Microcenter GPS" =1
 
 AUDIO_FILE="packet.Loc.wav"
 
@@ -135,10 +135,10 @@ echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${D
 ##echo "${MYCALL}>BEACON,WIDE3-3:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>WIDE1-1,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-echo "${MYCALL}>KELLER,WIDE1*,WIDE2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+###echo "${MYCALL}>KELLER,WIDE1*,WIDE2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ## FOR SOME REASON, the last packet does not seem to send properly, so put one or two more with "gibberish" to flush the others
-echo "${MYCALL}>APNXXX:#Next-to-last test packet" >> z.txt
+###echo "${MYCALL}>APNXXX:#Next-to-last test packet" >> z.txt
 echo "${MYCALL}>APNXXX:#Last test packet" >> z.txt
 
 gen_packets -o ${AUDIO_FILE} -r 44100 z.txt
