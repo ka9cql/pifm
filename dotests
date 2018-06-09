@@ -3,7 +3,7 @@
 # run some tests on APRS packet generation
 ####################
 
-MYCALL="KA9CQL-2"
+MYCALL="KA9CQL-11"
 # Desired -
 # ZULU_DDHHMM="091024"
 ZULU_DDHHMM=`date "+%d%H%M"`
@@ -11,26 +11,26 @@ LAT_DDMMxSS="3449.27"
 LAT_NS="N"
 LON_DDDMMxSS="11740.79"
 LON_WE="W"
-MSG="Warpig-II balloon"
+MSG="Warpig-III balloon"
 ALT="003285"
 
 
 rm -f z.txt
 #rm -f 1.txt 2.txt 3.txt 4.txt 5.txt 6.txt 7.txt z.txt
 
-#  echo "KA9CQL-2>APNXXX:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-2>APNXXX,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-2>APNXXX:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
-#  echo "KA9CQL-2>APNXXX,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
-#  echo "KA9CQL-2>APNXXX,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
-#  echo "KA9CQL-2>BEACON:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-2>BEACON,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-2>WIDE1-1,BEACON:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-2>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
-#  echo "KA9CQL-2>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
-#  echo "KA9CQL-2>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
-#  echo "KA9CQL-2>BEACON,WIDE3-3:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
-#  echo "KA9CQL-2>APDW12:#Test packet" >> z.txt
+#  echo "KA9CQL-11>APNXXX:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "KA9CQL-11>APNXXX,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "KA9CQL-11>APNXXX:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "KA9CQL-11>APNXXX,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "KA9CQL-11>APNXXX,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "KA9CQL-11>BEACON:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "KA9CQL-11>BEACON,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "KA9CQL-11>WIDE1-1,BEACON:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "KA9CQL-11>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+#  echo "KA9CQL-11>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "KA9CQL-11>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "KA9CQL-11>BEACON,WIDE3-3:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "KA9CQL-11>APDW12:#Test packet" >> z.txt
 #
 # gen_packets -o z.wav z.txt
 #

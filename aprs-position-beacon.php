@@ -13,8 +13,8 @@ lon = -117.4086769
 function process_gps() {
 
 	// Settings & variables
-	$callsign = "KA9CQL-2";			// Your callsign
-	$comment = "WarPig-II Position report";		// APRS comment
+	$callsign = "KA9CQL-11";			// Your callsign
+	$comment = "Warpig-III Position report";		// APRS comment
 
 	//$url = 'http://localhost/gpsd.php?op=json';
 	//$content = file_get_contents($url);

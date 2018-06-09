@@ -9,6 +9,7 @@
 #                      GPS's "non-NMEA" (aka decimal) LAT/LON values into NMEA-compatible
 #                      format.
 #  2018-02-22  msipin  Trimmed output, tried specifying Keller (Keller Peak) repeater in path
+#  2018-06-04  msipin/epowell  Adapted for St. Louis testing, and for using AGW/AGPE (spelling?)
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -32,7 +33,7 @@ fi
 
 
 # Your callsign (MANDATORY!)
-MYCALL="KA9CQL-2"
+MYCALL="KA9CQL-11"
 # Desired -
 # ZULU_DDHHMM="110736"
 ZULU_DDHHMM=`date "+%d%H%M"`
@@ -101,7 +102,7 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="WarPig-II telemetry "
+MSG="Warpig-III telemetry "
 
 
 rm -f $AUDIO_FILE
@@ -109,9 +110,9 @@ rm -f z.txt
 
 # aprs.dat file contents - 
 ## KA9CQL-2>APNXXX:#First test packet
-## KA9CQL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79WOWarpig-II balloon/A=003285
-## KA9CQL-2>APNXXX,WIDE2-2:/090738z3449.27N/11740.79WOWarpig-II balloon/A=003285
-## KA9CQL-2>APNXXX,WIDE3-3:/090738z3449.27N/11740.79WOWarpig-II balloon/A=003285
+## KA9CQL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
+## KA9CQL-2>APNXXX,WIDE2-2:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
+## KA9CQL-2>APNXXX,WIDE3-3:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
 ## KA9CQL-2>APNXXX:#Next-to-last test packet
 ## KA9CQL-2>APNXXX:#Last test packet
 
@@ -127,11 +128,14 @@ rm -f z.txt
 #echo "${MYCALL}>APNXXX:#First test packet" >> z.txt
 
 ## THE FOLLOWING WORKED, GREAT! -
-echo "${MYCALL}>APNXXX:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+###echo "${MYCALL}>APNXXX:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>APNXXX,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>APNXXX,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>BEACON:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+###echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+###echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+# THE CURRENT MOBILE STANDARD - echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>BEACON,WIDE3-3:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>WIDE1-1,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
