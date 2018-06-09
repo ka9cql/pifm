@@ -1,0 +1,35 @@
+#!/bin/sh
+################
+# dt - Do APRS packet test
+################
+
+
+
+
+#FREQ=144.394157	# Orig, tests
+FREQ=144.3941		# CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear
+
+VOLUME=4		# Default I have always been using
+#VOLUME=8
+
+
+while [ 1 ]
+do
+	makePacket.sh
+	pifm packet.Loc.wav ${FREQ} 44100 mono ${VOLUME}
+	sleep 10
+done
+
+exit 0
+
+
+
+##########################
+
+Usage:   pifm wavfile.wav [freq] [sample rate] [stereo | mono] [volume]
+
+Where wavfile defaults to 16 bit 44.1kHz mono.  Set wavfile to '-' to use stdin.
+freq is in Mhz (default 144.39)
+sample rate of wav file in Hz
+volume is in integer (0-8; default 4)
+

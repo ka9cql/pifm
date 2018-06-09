@@ -638,7 +638,8 @@ void setupDMA( float centerFreq ){
    //           the envelope changes significantly if I add a single amplifier, and banding gets obliterated if I add two.
    //
    // 144.3941  CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear. It does introduce
-   //           "spray" above and below outermost freqs, but might leave enough energy in "expected" bands to promote decoding.
+   //           "spray" above and below outermost freqs, but might leave enough energy in "expected" bands to promote decoding. St. Louis tests
+   //           used this, with success - especially when one amplifier was added.  (Not good with two amps - just like in CA!)
    //
    // 144.39454 with 0.020 and no amplifier looks IDENTICAL to live signals. Adding an amplifier seems to flatten the envelope significantly
    //
