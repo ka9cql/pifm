@@ -6,8 +6,9 @@
 
 
 
-#FREQ=144.394157	# Orig, tests
-FREQ=144.3941		# CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear
+#FREQ=144.394157		# Orig, tests, and at Eric's in St. Louis
+FREQ=144.392929		# Tests in VVille, after St. Louis, and with replacement board xmitting 1229 Hz too high
+#FREQ=144.3941		# CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear
 
 VOLUME=4		# Default I have always been using
 #VOLUME=8

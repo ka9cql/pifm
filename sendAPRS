@@ -12,9 +12,10 @@ export PATH
 
 # Frequency in Megahertz (Mhz)
 #   E.G. 144.390 = Mhz FM (+/- a little offset...?)
-#FREQ=144.394157	# Seems (visually on waterfall) properly centered - My and Eric's original "walkabout" tests used this
+##FREQ=144.394157		# Seems (visually on waterfall) properly centered - My and Eric's original "walkabout" tests used this
+FREQ=144.392929		# Tests in VVille, after St. Louis, and with replacement board xmitting 1229 Hz too high
 #FREQ=144.390		# Did *NOT* get decoded on direwolf...
-FREQ=144.3941		# CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear - St. Louis tests used this!
+#FREQ=144.3941		# CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear - St. Louis tests used this!
 
 cd /home/pifm
 
