@@ -10,7 +10,6 @@
 #                      format.
 #  2018-02-22  msipin  Trimmed output, tried specifying Keller (Keller Peak) repeater in path
 #  2018-06-04  msipin/epowell  Adapted for St. Louis testing, and for using AGW/AGPE (spelling?)
-#  2018-11-01  msipin/epowell  Adjusted for using Baofeng 888 as transmitter, rather than BCM built-in oscillator
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -33,9 +32,8 @@ fi
 
 
 
-# Your callsign (MANDATORY!) - Use "dash-eleven" ("-11") to automatically mark as a balloon
+# Your callsign (MANDATORY!)
 MYCALL="KA9CQL-11"
-
 # Desired -
 # ZULU_DDHHMM="110736"
 ZULU_DDHHMM=`date "+%d%H%M"`
@@ -138,31 +136,17 @@ rm -f z.txt
 ###echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 # THE CURRENT MOBILE STANDARD - echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-
-## 2018-11-02 WORKS AGAINST KELLER, from home with chimney 2m/440 antenna (NOTE: MUST BE 2x FOR VOX!)
-echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-
-
-
-## Match Eric's radio output - WORKS on my house chimney 2m/440 antenna
-##echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-
-
-
+echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ##echo "${MYCALL}>BEACON,WIDE3-3:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+##echo "${MYCALL}>WIDE1-1,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ###echo "${MYCALL}>KELLER,WIDE1*,WIDE2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
-## FOR SOME REASON, the last packet does not seem to send properly when sent using BCM built-in oscillator, so put one or two
-## more with "gibberish" to flush the others
+## FOR SOME REASON, the last packet does not seem to send properly, so put one or two more with "gibberish" to flush the others
 ###echo "${MYCALL}>APNXXX:#Next-to-last test packet" >> z.txt
-##echo "${MYCALL}>APNXXX:#Last test packet" >> z.txt
+echo "${MYCALL}>APNXXX:#Last test packet" >> z.txt
 
 gen_packets -o ${AUDIO_FILE} -r 44100 z.txt
 

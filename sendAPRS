@@ -5,6 +5,7 @@
 # HISTORICAL INFORMATION -
 #
 #  2018-02-10  msipin  Created
+#  2018-11-01  msipin  Converted from using BCM built-in oscillator to using Baofeng 888
 ###########################
 
 PATH=.:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/pifm
@@ -22,8 +23,19 @@ cd /home/pifm
 while [ 1 ]
 do
 	/home/pifm/makePacket.sh -q
-	/home/pifm/pifm /home/pifm/packet.Loc.wav ${FREQ} 44100 mono 4 2>&1 > /dev/null
+
+	## Play packet (wav) file out via BCM built-in oscillator
+	##/home/pifm/pifm /home/pifm/packet.Loc.wav ${FREQ} 44100 mono 4 2>&1 > /dev/null
+
+	## Play packet (wav) file out the PCM0/PCM1 audio output (feeds the Baofeng 888 microphone input)
+	/usr/bin/aplay /home/pifm/packet.Loc.wav 2>&1 > /dev/null
+
+	## LIVE VALUE -
 	sleep 43
+
+	## TEST VALUE -
+	##sleep 21
 done 2>&1 >> /home/pifm/aprs.log
 
 exit 0
+

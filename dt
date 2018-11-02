@@ -18,7 +18,9 @@ while [ 1 ]
 do
 	makePacket.sh
 	pifm packet.Loc.wav ${FREQ} 44100 mono ${VOLUME}
-	sleep 10
+	echo "Sleeping..."
+	##sleep 10
+	sleep 5
 done
 
 exit 0
