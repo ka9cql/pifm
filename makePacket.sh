@@ -141,9 +141,14 @@ rm -f z.txt
 ##echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
-## 2018-11-02 WORKS AGAINST KELLER, from home with chimney 2m/440 antenna (NOTE: MUST BE 2x FOR VOX!)
-echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+## 2018-11-02 WORKS AGAINST KELLER, from home with chimney 2m/440 antenna (NOTE: MUST BE REPEATED 2x FOR VOX!)
+##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+
+## 2018-11-03 Tried this because we're launching at night, and theorize we'll need more help getting
+##            into an iGate (NOTE: DON'T FORGET TO DO IT 2x FOR Baofeng 888 + VOX!)
+echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 
 
