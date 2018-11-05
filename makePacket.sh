@@ -11,6 +11,9 @@
 #  2018-02-22  msipin  Trimmed output, tried specifying Keller (Keller Peak) repeater in path
 #  2018-06-04  msipin/epowell  Adapted for St. Louis testing, and for using AGW/AGPE (spelling?)
 #  2018-11-01  msipin/epowell  Adjusted for using Baofeng 888 as transmitter, rather than BCM built-in oscillator
+#  2018-11-04  msipin/epowell  Bumped up to "Warpig-IV" - otherwise same as prior (NOTE: THIS MEANS that this
+#                              version will work with *both* Baofeng 888 + VOX and the BCM internal oscillator
+#                              to generate APRS position reports.)
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -104,7 +107,7 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="Warpig-III telemetry "
+MSG="Warpig-IV telemetry "
 
 
 rm -f $AUDIO_FILE
@@ -147,6 +150,8 @@ rm -f z.txt
 
 ## 2018-11-03 Tried this because we're launching at night, and theorize we'll need more help getting
 ##            into an iGate (NOTE: DON'T FORGET TO DO IT 2x FOR Baofeng 888 + VOX!)
+## 2018-11-04  IT JUST SO HAPPENS that this same z.txt file format will work with *BOTH* the
+##             Baofeng 888 + VOX and the BCM built-in oscillator!!!
 echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
