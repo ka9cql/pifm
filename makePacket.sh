@@ -11,7 +11,10 @@
 #  2018-02-22  msipin  Trimmed output, tried specifying Keller (Keller Peak) repeater in path
 #  2018-06-04  msipin/epowell  Adapted for St. Louis testing, and for using AGW/AGPE (spelling?)
 #  2018-11-01  msipin/epowell  Adjusted for using Baofeng 888 as transmitter, rather than BCM built-in oscillator
-#  2019-01-16  msipin          Passed two temperature readings in the APRS packet
+#  2018-11-04  msipin/epowell  Bumped up to "Warpig-IV" - otherwise same as prior (NOTE: THIS MEANS that this
+#                              version will work with *both* Baofeng 888 + VOX and the BCM internal oscillator
+#                              to generate APRS position reports.)
+#  2019-01-16  msipin          Replaced my call with "N0CALL". Allowed multiple temperatures to be transmitted.
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -96,9 +99,9 @@ fi
 ALT=`cat ${LAST_KNOWN_GOOD_DIR}/alt | awk -F"," '{ printf "%06d",int($1*3.3); }'`
 
 # Temperature (degrees F) - ONE SENSOR -
-##DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %s",$3,toupper($4); }'`
+#DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %s",$3,toupper($4); }'`
 # Temperature (degrees F) - TWO SENSORS -
-DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %d %s",$3,$7,toupper($4); }'`
+DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temps %d/%d %s",$3,$7,toupper($4); }'`
 
 # Course (heading), in degrees format: ddd
 HDG="090"
@@ -150,6 +153,8 @@ rm -f z.txt
 
 ## 2018-11-03 Tried this because we're launching at night, and theorize we'll need more help getting
 ##            into an iGate (NOTE: DON'T FORGET TO DO IT 2x FOR Baofeng 888 + VOX!)
+## 2018-11-04  IT JUST SO HAPPENS that this same z.txt file format will work with *BOTH* the
+##             Baofeng 888 + VOX and the BCM built-in oscillator!!!
 echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
