@@ -3,7 +3,7 @@
 # run some tests on APRS packet generation
 ####################
 
-MYCALL="KA9CQL-11"
+MYCALL="N0CALL-11"
 # Desired -
 # ZULU_DDHHMM="091024"
 ZULU_DDHHMM=`date "+%d%H%M"`
@@ -18,19 +18,19 @@ ALT="003285"
 rm -f z.txt
 #rm -f 1.txt 2.txt 3.txt 4.txt 5.txt 6.txt 7.txt z.txt
 
-#  echo "KA9CQL-11>APNXXX:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-11>APNXXX,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-11>APNXXX:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
-#  echo "KA9CQL-11>APNXXX,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
-#  echo "KA9CQL-11>APNXXX,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
-#  echo "KA9CQL-11>BEACON:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-11>BEACON,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-11>WIDE1-1,BEACON:@080749z3449.27N/11740.79W$" >> z.txt
-#  echo "KA9CQL-11>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
-#  echo "KA9CQL-11>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
-#  echo "KA9CQL-11>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
-#  echo "KA9CQL-11>BEACON,WIDE3-3:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
-#  echo "KA9CQL-11>APDW12:#Test packet" >> z.txt
+#  echo "N0CALL-11>APNXXX:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "N0CALL-11>APNXXX,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "N0CALL-11>APNXXX:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "N0CALL-11>APNXXX,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "N0CALL-11>APNXXX,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "N0CALL-11>BEACON:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "N0CALL-11>BEACON,WIDE1-1:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "N0CALL-11>WIDE1-1,BEACON:@080749z3449.27N/11740.79W$" >> z.txt
+#  echo "N0CALL-11>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285" >> z.txt
+#  echo "N0CALL-11>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "N0CALL-11>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "N0CALL-11>BEACON,WIDE3-3:/080749z3449.27N/11740.79W>Warpig-III balloon/A=003285" >> z.txt
+#  echo "N0CALL-11>APDW12:#Test packet" >> z.txt
 #
 # gen_packets -o z.wav z.txt
 #
@@ -80,152 +80,152 @@ exit 0
 THIS IS WHAT Direwolf on Linux (Yaesu FT-857D with Signalink soundcard) thinks -
 #########################################################
 
-KA9CQL-2 audio level = 7(4/2)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX:@080749z3449.27N/11740.79W$
+N0CALL-2 audio level = 7(4/2)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX:@080749z3449.27N/11740.79W$
 Position with time, original primary Phone, TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE1-1:@080749z3449.27N/11740.79W$
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE1-1:@080749z3449.27N/11740.79W$
 Position with time, original primary Phone, TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON:@080749z3449.27N/11740.79W$
+N0CALL-2 audio level = 8(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON:@080749z3449.27N/11740.79W$
 Position with time, original primary Phone
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>BEACON,WIDE1-1:@080749z3449.27N/11740.79W$
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>BEACON,WIDE1-1:@080749z3449.27N/11740.79W$
 Position with time, original primary Phone
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>WIDE1-1,BEACON:@080749z3449.27N/11740.79W$
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>WIDE1-1,BEACON:@080749z3449.27N/11740.79W$
 Position with time, original primary Phone
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
 =========================================================
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   ____||||:
-[0.6] KA9CQL-2>APNXXX:@080749z3449.27NS11740.79W>
+N0CALL-2 audio level = 7(4/1)   [NONE]   ____||||:
+[0.6] N0CALL-2>APNXXX:@080749z3449.27NS11740.79W>
 Position with time, Solar powered, TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE1-1:@080749z3449.27NS11740.79W>
+N0CALL-2 audio level = 7(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE1-1:@080749z3449.27NS11740.79W>
 Position with time, Solar powered, TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
-Position with time, Solar powered, TNC-X  (K6DBG)
-N 34 49.2700, W 117 40.7900, alt 3285 ft
-Warpig-II balloon
-
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX,WIDE1-1:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
 Position with time, Solar powered, TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX,WIDE2-2:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX,WIDE1-1:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
 Position with time, Solar powered, TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON:@080749z3449.27NS11740.79W>
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX,WIDE2-2:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
+Position with time, Solar powered, TNC-X  (K6DBG)
+N 34 49.2700, W 117 40.7900, alt 3285 ft
+Warpig-II balloon
+
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON:@080749z3449.27NS11740.79W>
 Position with time, Solar powered
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON,WIDE1-1:@080749z3449.27NS11740.79W>
+N0CALL-2 audio level = 8(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON,WIDE1-1:@080749z3449.27NS11740.79W>
 Position with time, Solar powered
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>WIDE1-1,BEACON:@080749z3449.27NS11740.79W>
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>WIDE1-1,BEACON:@080749z3449.27NS11740.79W>
 Position with time, Solar powered
 N 34 49.2700, W 117 40.7900
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
 Position with time, Solar powered
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON,WIDE1-1:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON,WIDE1-1:/080749z3449.27NS11740.79W>Warpig-II balloon/A=003285
 Position with time, Solar powered
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
 ========================================================
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE2-2:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE2-2:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>BEACON:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>BEACON:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
@@ -233,86 +233,86 @@ Warpig-II balloon
 
 
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE2-2:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE2-2:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>BEACON:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>BEACON:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
 
 # WAS GOOD -
-KA9CQL-2>APNXXX:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
-KA9CQL-2>APNXXX:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>APNXXX:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>APNXXX:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 
-KA9CQL-2>APNXXX,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
-KA9CQL-2>APNXXX,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>APNXXX,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>APNXXX,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 
-KA9CQL-2>APNXXX,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
-KA9CQL-2>APNXXX,WIDE2-2:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>APNXXX,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>APNXXX,WIDE2-2:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 
-KA9CQL-2>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
-KA9CQL-2>BEACON:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>BEACON:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>BEACON:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 
-KA9CQL-2>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
-KA9CQL-2>BEACON,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>BEACON,WIDE1-1:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>BEACON,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 
-KA9CQL-2>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2>BEACON,WIDE2-2:/080749z3449.27N/11740.79W>Warpig-II balloon/A=003285
 ### MISSING THIS ONE!! ###
 
 
 
 
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE2-2:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE2-2:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>BEACON:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>BEACON:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>BEACON,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>BEACON,WIDE1-1:/090059z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
@@ -321,26 +321,26 @@ Warpig-II balloon
 
 
 
-KA9CQL-2 audio level = 7(4/1)   [NONE]   _____||||
-[0.6] KA9CQL-2>APNXXX:/090738z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 7(4/1)   [NONE]   _____||||
+[0.6] N0CALL-2>APNXXX:/090738z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>APNXXX,WIDE2-2:/090738z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>APNXXX,WIDE2-2:/090738z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view), TNC-X  (K6DBG)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
 
-KA9CQL-2 audio level = 8(4/1)   [NONE]   ______|||
-[0.7] KA9CQL-2>BEACON:/090738z3449.27N/11740.79W>Warpig-II balloon/A=003285
+N0CALL-2 audio level = 8(4/1)   [NONE]   ______|||
+[0.7] N0CALL-2>BEACON:/090738z3449.27N/11740.79W>Warpig-II balloon/A=003285
 Position with time, normal car (side view)
 N 34 49.2700, W 117 40.7900, alt 3285 ft
 Warpig-II balloon
