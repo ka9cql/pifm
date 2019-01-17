@@ -84,3 +84,8 @@ DEPENDENCY ALERT!
 This project has a dependency upon the direwolf project.
 
 In particular, you will need the "gen_packets", "direwolf", "decode_aprs" and "atest" executables from that project for both testing and execution of this project. These executables are created by the appropriate Makefile from that direwolf project.  See that project for instructions on building those executables.
+
+
+FINAL NOTES:
+------------
+Because this project depends upon other projects, I may have checked in some items from those other projects into THIS project, just for reference/completeness. IN EVERY CASE OF DISCREPANCY BETWEEN THE TWO you should ALWAYS defer to those dependencies. Conflicting files in this repository are only 'examples', and not "FINAL".

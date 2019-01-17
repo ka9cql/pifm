@@ -1,0 +1,59 @@
+#!/bin/sh
+####################
+# makeLinks - Create the symbolic links from this repository to the system's /usr/local/bin directory
+#
+# NOTE: This only needs to be done once, and should be done by "root"
+####################
+
+# The directory of the current repository
+REPO1_DIR=/home/pifm
+# The directory of the direwolf repository
+REPO2_DIR=/home/direwolf
+
+echo
+
+# This repo's executables and scripts -
+for A in pifm \
+	makePacket.sh
+do
+	ln -s ${REPO1_DIR}/$A /usr/local/bin
+done
+
+
+# Direwolf's main executables -
+for A in atest \
+	gen_packets \
+	text2tt \
+	tt2text \
+	ttcalc \
+	utm2ll \
+	aclients \
+	decode_aprs \
+	direwolf \
+	dwespeak.sh \
+	ll2utm \
+	log2gpx 
+do
+	ln -s ${REPO2_DIR}/$A /usr/local/bin
+done
+
+
+# Direwolf's "telemetry toolkit" executables -
+for A in telem-balloon.pl \
+	telem-bits.pl \
+	telem-data91.pl \
+	telem-data.pl \
+	telem-eqns.pl \
+	telem-parm.pl \
+	telem-seq.sh \
+	telem-unit.pl \
+	telem-volts.py 
+do
+
+	ln -s ${REPO2_DIR}/telemetry-toolkit/$A /usr/local/bin
+done
+
+echo
+
+exit 0
+
