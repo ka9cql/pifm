@@ -1,0 +1,21 @@
+#!/bin/sh
+#################
+# sa - A test version of "sendAPRS" used to send APRS "natively" using the
+#      Raspberry Pi's BCM spread-spectrum chip.
+
+PATH=.:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/pifm
+export PATH
+
+# Frequency in Megahertz (Mhz)
+#   E.G. 144.390 = Mhz FM (+/- a little offset...?)
+##FREQ=144.394157		# Seems (visually on waterfall) properly centered - My and Eric's original "walkabout" tests used this
+FREQ=144.392929		# Tests in VVille, after St. Louis, and with replacement board xmitting 1229 Hz too high
+#FREQ=144.390		# Did *NOT* get decoded on direwolf...
+#FREQ=144.3941		# CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear - St. Louis tests used this!
+
+cd /home/pifm
+
+	/home/pifm/makePacket.sh -q
+	/home/pifm/pifm /home/pifm/packet.Loc.wav ${FREQ} 44100 mono 4 2>&1 > /dev/null
+
+exit 0

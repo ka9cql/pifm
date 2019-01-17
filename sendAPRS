@@ -31,10 +31,14 @@ do
 	/usr/bin/aplay /home/pifm/packet.Loc.wav 2>&1 > /dev/null
 
 	## LIVE VALUE -
-	sleep 43
+	##sleep 43 # Warpig-III value
+	##sleep 53 # Warpig-IV value
+	##sleep 97 # Warpig-V value
+	sleep 97 # Warpig-VI value
 
 	## TEST VALUE -
-	##sleep 21
+	##sleep 11
+
 done 2>&1 >> /home/pifm/aprs.log
 
 exit 0

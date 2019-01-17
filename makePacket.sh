@@ -11,6 +11,7 @@
 #  2018-02-22  msipin  Trimmed output, tried specifying Keller (Keller Peak) repeater in path
 #  2018-06-04  msipin/epowell  Adapted for St. Louis testing, and for using AGW/AGPE (spelling?)
 #  2018-11-01  msipin/epowell  Adjusted for using Baofeng 888 as transmitter, rather than BCM built-in oscillator
+#  2019-01-16  msipin          Passed two temperature readings in the APRS packet
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -34,7 +35,7 @@ fi
 
 
 # Your callsign (MANDATORY!) - Use "dash-eleven" ("-11") to automatically mark as a balloon
-MYCALL="KA9CQL-11"
+MYCALL="N0CALL-11"
 
 # Desired -
 # ZULU_DDHHMM="110736"
@@ -94,8 +95,10 @@ fi
 # 985.10,M
 ALT=`cat ${LAST_KNOWN_GOOD_DIR}/alt | awk -F"," '{ printf "%06d",int($1*3.3); }'`
 
-# Temperature (degrees F)
-DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %s",$3,toupper($4); }'`
+# Temperature (degrees F) - ONE SENSOR -
+##DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %s",$3,toupper($4); }'`
+# Temperature (degrees F) - TWO SENSORS -
+DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %d %s",$3,$7,toupper($4); }'`
 
 # Course (heading), in degrees format: ddd
 HDG="090"
@@ -104,19 +107,19 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="Warpig-III telemetry "
+MSG="Warpig-VI telemetry "
 
 
 rm -f $AUDIO_FILE
 rm -f z.txt
 
 # aprs.dat file contents - 
-## KA9CQL-2>APNXXX:#First test packet
-## KA9CQL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
-## KA9CQL-2>APNXXX,WIDE2-2:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
-## KA9CQL-2>APNXXX,WIDE3-3:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
-## KA9CQL-2>APNXXX:#Next-to-last test packet
-## KA9CQL-2>APNXXX:#Last test packet
+## N0CALL-2>APNXXX:#First test packet
+## N0CALL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
+## N0CALL-2>APNXXX,WIDE2-2:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
+## N0CALL-2>APNXXX,WIDE3-3:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
+## N0CALL-2>APNXXX:#Next-to-last test packet
+## N0CALL-2>APNXXX:#Last test packet
 
 
 ## USING APRS (can't yet get or build it for Pi Zero...) -
