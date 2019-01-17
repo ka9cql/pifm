@@ -76,3 +76,11 @@ All rights of the original authors reserved.
 * http://www.youtube.com/v/ekcdAX53-S8#! 
 
 * https://github.com/richardghirst/PiBits/pull/18
+
+
+
+DEPENDENCY ALERT!
+-----------------
+This project has a dependency upon the direwolf project.
+
+In particular, you will need the "gen_packets", "direwolf", "decode_aprs" and "atest" executables from that project for both testing and execution of this project. These executables are created by the appropriate Makefile from that direwolf project.  See that project for instructions on building those executables.
