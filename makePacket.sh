@@ -110,7 +110,7 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="Warpig-VI telemetry "
+MSG="Warpig-VII telemetry "
 
 
 rm -f $AUDIO_FILE
