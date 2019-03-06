@@ -15,6 +15,8 @@
 #                              version will work with *both* Baofeng 888 + VOX and the BCM internal oscillator
 #                              to generate APRS position reports.)
 #  2019-01-16  msipin          Replaced my call with "N0CALL". Allowed multiple temperatures to be transmitted.
+#  2019-03-05  msipin  Added instructions for sending the newly-created packet out both via the BCM built-in
+#                      oscillator and via PCM0/a USB audio dongle.
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -190,9 +192,14 @@ then
 
 	echo
 	echo "To transmit the file you just built over the air as 2m APRS"
-	echo "position reports, do this - "
+	echo "position reports via the BCM built-in oscillator, do this - "
 	echo
 	echo "    pifm ${AUDIO_FILE} 144.394157 44100 mono 4"
+	echo
+	echo "To send it out the audio port (PCM0 or USB audio dongle) to a"
+	echo "2m radio in VOX mode, do this - "
+	echo
+	echo "    aplay ${AUDIO_FILE}"
 	echo
 fi
 
