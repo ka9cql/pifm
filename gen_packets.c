@@ -162,6 +162,7 @@ int main(int argc, char **argv)
 	int i;
 	int chan;
 	int experiment = 0;
+	int t_opt = 0;		/* Text color option. */				
 
 
 /*
@@ -197,6 +198,14 @@ int main(int argc, char **argv)
 	FILE *input_fp = NULL;		/* File or NULL for built-in message */
 
 	strlcpy (output_file, "", sizeof(output_file));
+
+/*
+ *
+ * TO TURN OFF TEXT COLORS, FOR GOD's SAKE!! --
+ */
+	t_opt = 0;		/* 1 = normal, 0 = no text colors. */
+	text_color_init(t_opt);
+
 
 /*
  * Parse the command line options.
