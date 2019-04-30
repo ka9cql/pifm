@@ -17,6 +17,7 @@
 #  2019-01-16  msipin          Replaced my call with "N0CALL". Allowed multiple temperatures to be transmitted.
 #  2019-03-05  msipin  Added instructions for sending the newly-created packet out both via the BCM built-in
 #                      oscillator and via PCM0/a USB audio dongle.
+#  2019-04-28  msipin  Added trailing space after all data to separate valid data from last digit "weird" decode
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -138,27 +139,27 @@ rm -f z.txt
 #echo "${MYCALL}>APNXXX:#First test packet" >> z.txt
 
 ## THE FOLLOWING WORKED, GREAT! -
-###echo "${MYCALL}>APNXXX:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>APNXXX,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>APNXXX,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>BEACON:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-###echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-###echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+###echo "${MYCALL}>APNXXX:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+##echo "${MYCALL}>APNXXX,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+##echo "${MYCALL}>APNXXX,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+##echo "${MYCALL}>BEACON:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+###echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+###echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
 
-# THE CURRENT MOBILE STANDARD - echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+# THE CURRENT MOBILE STANDARD - echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+##echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+##echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
 
 ## 2018-11-02 WORKS AGAINST KELLER, from home with chimney 2m/440 antenna (NOTE: MUST BE REPEATED 2x FOR VOX!)
-##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
 
 ## 2018-11-03 Tried this because we're launching at night, and theorize we'll need more help getting
 ##            into an iGate (NOTE: DON'T FORGET TO DO IT 2x FOR Baofeng 888 + VOX!)
 ## 2018-11-04  IT JUST SO HAPPENS that this same z.txt file format will work with *BOTH* the
 ##             Baofeng 888 + VOX and the BCM built-in oscillator!!!
-echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
 
 
 
