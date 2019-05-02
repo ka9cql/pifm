@@ -100,7 +100,7 @@ fi
 # ALT="003285"
 # What is in the last-known-good file -
 # 985.10,M
-ALT=`cat ${LAST_KNOWN_GOOD_DIR}/alt | awk -F"," '{ printf "%06d",int($1*3.3); }'`
+ALT=`cat ${LAST_KNOWN_GOOD_DIR}/alt | awk -F"," '{ printf "%06d",int($1*3.281); }'`
 
 # Temperature (degrees F) - ONE SENSOR -
 #DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %s",$3,toupper($4); }'`
