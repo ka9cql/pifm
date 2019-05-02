@@ -18,6 +18,7 @@
 #  2019-03-05  msipin  Added instructions for sending the newly-created packet out both via the BCM built-in
 #                      oscillator and via PCM0/a USB audio dongle.
 #  2019-04-28  msipin  Added trailing space after all data to separate valid data from last digit "weird" decode
+#  2019-05-02  msipin  Adapted to using getDirewolfData, rather than just sending temperature data
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -104,7 +105,8 @@ ALT=`cat ${LAST_KNOWN_GOOD_DIR}/alt | awk -F"," '{ printf "%06d",int($1*3.3); }'
 # Temperature (degrees F) - ONE SENSOR -
 #DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temp. %d %s",$3,toupper($4); }'`
 # Temperature (degrees F) - TWO SENSORS -
-DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temps %d/%d %s",$3,$7,toupper($4); }'`
+#DEGF=`cat ${LAST_KNOWN_GOOD_DIR}/temp | awk -F"," '{ printf "Temps %d/%d %s",$3,$7,toupper($4); }'`
+DEGF=`getDirewolfData`
 
 # Course (heading), in degrees format: ddd
 HDG="090"
@@ -113,20 +115,11 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="Warpig-VII telemetry "
+MSG="Warpig-VII "
 
 
 rm -f $AUDIO_FILE
 rm -f z.txt
-
-# aprs.dat file contents - 
-## N0CALL-2>APNXXX:#First test packet
-## N0CALL-2>APNXXX,WIDE1-1:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
-## N0CALL-2>APNXXX,WIDE2-2:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
-## N0CALL-2>APNXXX,WIDE3-3:/090738z3449.27N/11740.79WOWarpig-III balloon/A=003285
-## N0CALL-2>APNXXX:#Next-to-last test packet
-## N0CALL-2>APNXXX:#Last test packet
-
 
 ## USING APRS (can't yet get or build it for Pi Zero...) -
 ## aprs -c ${MYCALL} -o AUDIO_FILE "/${ZULU_DDHHMM}z${LAT}/${LON}>${HDG}/${SPD}${MSG}/A=${ALT} ${DEGF}"
@@ -137,14 +130,6 @@ rm -f z.txt
 ##gen_packets -o packet.Loc.wav -r 44100 aprs.dat
 
 #echo "${MYCALL}>APNXXX:#First test packet" >> z.txt
-
-## THE FOLLOWING WORKED, GREAT! -
-###echo "${MYCALL}>APNXXX:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-##echo "${MYCALL}>APNXXX,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-##echo "${MYCALL}>APNXXX,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-##echo "${MYCALL}>BEACON:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-###echo "${MYCALL}>BEACON,WIDE2-2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-###echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
 
 # THE CURRENT MOBILE STANDARD - echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
 ##echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
@@ -161,19 +146,9 @@ rm -f z.txt
 echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
 echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
 
-
-
 ## Match Eric's radio output - WORKS on my house chimney 2m/440 antenna
 ##echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 ##echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-
-
-
-
-##echo "${MYCALL}>BEACON,WIDE3-3:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-###echo "${MYCALL}>KELLER,WIDE1*,WIDE2:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ## FOR SOME REASON, the last packet does not seem to send properly when sent using BCM built-in oscillator, so put one or two
 ## more with "gibberish" to flush the others
