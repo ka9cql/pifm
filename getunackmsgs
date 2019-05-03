@@ -1,0 +1,60 @@
+#!/bin/sh
+###########################################
+# getunackmsgs - Find all messages contained in Direwolf log (either direwolf.log or
+#                kiss.log) that were NOT ALREADY ACKNOWLEDGED.
+#
+# HISTORICAL INFORMATION -
+#
+#   2019-05-02  msipin  Created
+###########################################
+
+tmp_file1=/dev/shm/.getunackmsgs.$$.1
+tmp_file2=/dev/shm/.getunackmsgs.$$.2
+tmp_file3=/dev/shm/.getunackmsgs.$$.3
+
+trap "rm -f $tmp_file1 $tmp_file2 $tmp_file3; exit 0" 0 1 2 3 6 12 15
+
+
+# Use whichever one we finally settle on
+#LOGFILE=/home/direwolf/direwolf.log
+LOGFILE=/home/direwolf/kiss.log
+#LOGFILE=/home/direwolf/sccs/direwolf.log
+
+getmsgs | awk '{ print $1 }' | sort -u > $tmp_file1
+getmsgacks | sort -u > $tmp_file2
+diff $tmp_file1 $tmp_file2 | grep "^< " | sed "s/^< //" > $tmp_file3
+cat $tmp_file3
+
+exit 0
+
+
+1:
+EMAIL-2:668
+EMAIL-2:669
+EMAIL-2:670
+EMAIL-2:671
+EMAIL-2:672
+EMAIL-2:673
+K7JAJ-1:50
+K7JAJ-1:51
+K7JAJ-1:674
+
+2:
+KA9CQL-8:50
+KA9CQL-8:51
+N9RZR-8:29
+N9RZR-8:30
+N9RZR-8:31
+N9RZR-8:32
+
+3:
+EMAIL-2 668
+EMAIL-2 669
+EMAIL-2 670
+EMAIL-2 671
+EMAIL-2 672
+EMAIL-2 673
+K7JAJ-1 50
+K7JAJ-1 51
+K7JAJ-1 674
+

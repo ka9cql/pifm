@@ -1,0 +1,50 @@
+#!/bin/sh
+#############################
+# getunheard - Show all outbound messages that have not as yet been
+#              repeated by someone (aka potentially "unheard").
+#
+# HISTORICAL INFORMATION -
+#
+#  2019-05-02  msipin  Created.
+#############################
+
+tmp_file1=/dev/shm/.getunheard.$$.1
+
+trap "rm -f $tmp_file1; exit 0" 0 1 2 3 6 12 15
+
+MYCALL="KA9CQL-11"
+
+# Use whichever one we finally settle on
+#LOGFILE=/home/direwolf/direwolf.log
+LOGFILE=/home/direwolf/kiss.log
+#LOGFILE=/home/direwolf/sccs/direwolf.log
+
+egrep "^${MYCALL}>" ${LOGFILE} | awk -F"::" '{ if (NF >=2)  printf "::%s$\n",$2 }' | sed "s/ /./g" | sort -u > $tmp_file1
+
+for A in `cat $tmp_file1`
+do
+	#echo "DEBUG: [${A}]"
+	rslt=`grep "$A" ${LOGFILE} | grep -c -v "^${MYCALL}"`
+	#echo "DEBUG: rslt=$rslt"
+	if [ ""$rslt"" = 0 ]
+	then
+		#grep "^${MYCALL}" ${LOGFILE}
+		grep "$A" ${LOGFILE} | grep -v "^\["
+	fi
+done | sort -u
+
+
+exit 0
+
+1:
+::KA9CQL-8.:ack443$
+::KA9CQL-8.:ack444$
+::KA9CQL-8.:ack445$
+
+KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :ack450
+KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :ack451
+KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :Got your msg 450 - Msg 450 {78
+KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :Got your msg 451 - Msg 451 5:53pm {79
+[0 00:58:32] KA9CQL-11>WIDE1-1,KA6PTJ-3*,WIDE2-1::KA9CQL-8 :Got your msg 450 - Msg 450 {78
+[0 00:58:33] KA9CQL-11>WIDE1-1,KA6PTJ-3*,WIDE2-1::KA9CQL-8 :Got your msg 451 - Msg 451 5:53pm {79
+

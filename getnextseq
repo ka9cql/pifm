@@ -1,0 +1,18 @@
+#!/bin/sh
+##########################################
+# getnextseq - Get the next sequence number, and remember we got it
+#
+# HISTORICAL INFORMATION -
+#
+#  2019-05-02  msipin  Created
+##########################################
+
+SEQFILE=/home/direwolf/.SEQ_NUM
+
+CURR=`cat ${SEQFILE}`
+NEW=`expr $CURR + 1`
+echo $NEW > ${SEQFILE}
+cat ${SEQFILE}
+
+exit 0
+

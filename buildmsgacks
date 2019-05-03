@@ -1,0 +1,31 @@
+#!/bin/bash
+#####################################
+# buildmsgacks - Build AX.25 messages to acknowledge messages that haven't been ack'd
+#
+# HISTORICAL INFORMATION -
+#
+#  2019-05-02  msipin  Created
+#####################################
+
+MYCALL="KA9CQL-11"
+
+# TESTING TESTING -
+VIA="WIDE1-1,WIDE2-2"
+# FLIGHT FLIGHT -
+#VIA="BEACON,WIDE2-2"
+
+rm -f acks.txt
+getunackmsgs | sed "s/:/ /" | while read -r WHO NUM
+do
+	echo $MYCALL $VIA $WHO $NUM | awk '{ printf "%s>%s::%-9s:ack%d\n",$1,$2,$3,$4; }'
+	echo $MYCALL $VIA $WHO $NUM | awk '{ printf "%s>%s::%-9s:ack%d\n",$1,$2,$3,$4; }'
+done > acks.txt
+
+if [ -s acks.txt ]
+then
+	cp acks.txt /home/direwolf/outbox
+fi
+
+exit 0
+
+

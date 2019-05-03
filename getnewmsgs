@@ -1,0 +1,93 @@
+#!/bin/sh
+###############################
+# getnewmsgs - Get entire contents of messages that have not been 
+###############################
+
+tmp_file1=/dev/shm/.getnewmsgs.$$.1
+tmp_file2=/dev/shm/.getnewmsgs.$$.2
+tmp_file3=/dev/shm/.getnewmsgs.$$.3
+
+trap "rm -f $tmp_file1 $tmp_file2 $tmp_file3; exit 0" 0 1 2 3 6 12 15
+
+
+SEQFILE=/home/direwolf/.SEQ_NUM
+
+MYCALL="KA9CQL-11"
+
+# TESTING TESTING -
+VIA="WIDE1-1,WIDE2-2"
+# FLIGHT FLIGHT -
+#VIA="BEACON,WIDE2-2"
+
+RESP=0
+
+# See if user wants us to respond (-r)
+if [ $# -ge 1 -a ""$1"" = "-r" ]
+then
+	RESP=1
+fi
+
+getmsgs | awk '{ print $1 }' | sort -u > $tmp_file1
+getmsgacks | sort -u > $tmp_file2
+
+for A in `diff $tmp_file1 $tmp_file2 | grep "^<" | sed "s/^< //"`
+do
+	getmsgs | grep "^${A} "
+done > $tmp_file3
+
+# Show user new messages
+cat $tmp_file3
+
+if [ ""$RESP"" = "1" ]
+then
+	# Respond to new messages
+
+	# NEW MSGS -
+	# KA9CQL-8:446  This is totes msg 446 and you are not acking it
+	cat $tmp_file3 | sed "s/:/ /" | awk 'BEGIN {
+
+SEQ_NO='`getnextseq`';
+} {
+
+#   $1      $2     $3  $4 .............................$(NF-1) $NF
+#  $TO     $ACKTO
+# KA9CQL-8   446  This is totes msg 446 and you are not acking it
+
+# AX.25 VERSION -
+# KA9CQL-11>WIDE1-1,WIDE2-1::KA9CQL-8 :Test message 47 from deskpig {.SEQ_NUM
+printf "'${MYCALL}'>'${VIA}'::%-9s:Got your msg %d -",$1,$2;
+for (i=3;((i<=NF) && (i <= 7));i++) {
+	printf " %s",$i;
+}
+printf " {%d\n",'SEQ_NO+NR-1';
+
+} END {
+printf "FINAL_SEQ_NUM: %d\n",SEQ_NO+NR-1;
+}' > msgrsp.txt
+	cat msgrsp.txt
+
+	if [ -s msgrsp.txt ]
+	then
+		grep -v "FINAL_SEQ_NUM:" msgrsp.txt > /home/direwolf/outbox/msgrsp.txt
+
+		SB=`grep "FINAL_SEQ_NUM:" msgrsp.txt | awk '{ if (NF == 2) { print $2; } else { print 0; }; }'`
+		IS=`cat ${SEQFILE}`
+		#echo "DEBUG: SB=$SB IS=$IS"
+		while [ ""$IS"" -lt ""$SB"" ]
+		do
+			IS=`getnextseq`
+			#echo "DEBUG: SB=$SB IS=$IS"
+		done
+	fi
+
+
+fi
+
+exit 0
+
+
+KA9CQL-11>WIDE1-1,WIDE2-2::N9RZR-8  :Got your msg 36 - sipylogic 3 {122
+KA9CQL-11>WIDE1-1,WIDE2-2::N9RZR-8  :Got your msg 37 - sipylogic 4 {123
+[0 06:39:03] KA9CQL-11>WIDE1-1,KA6PTJ-3*,WIDE2-1::N9RZR-8  :Got your msg 36 - sipylogic 3 {122
+[0 06:39:04] KA9CQL-11>WIDE1-1,KA6PTJ-3,KELLER,WIDE2*::N9RZR-8  :Got your msg 37 - sipylogic 4 {123
+
