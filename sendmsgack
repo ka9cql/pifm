@@ -1,0 +1,102 @@
+#!/bin/bash
+#####################################
+# sendmsgack - Build AX.25 acknowledgement message to the given sender
+#
+# HISTORICAL INFORMATION -
+#
+#  2019-05-09  msipin  Created
+#####################################
+
+tmp_file1=/dev/shm/sendmsgack.$$.1
+
+
+trap "rm -f $tmp_file1; exit 0" 0 1 2 3 6 12 15
+
+
+MYCALL="N0CALL-11"
+
+# TESTING TESTING -
+VIA="WIDE1-1,WIDE2-2"
+# FLIGHT FLIGHT -
+#VIA="BEACON,WIDE2-2"
+
+WHO=$1
+NUM=$2
+shift 2
+
+rm -f $tmp_file1
+
+# Default to don't-need-ack
+NEED_ACK="0"
+
+# If message id is not zero, then we need to send an acknowledgement
+if [ ""$NUM"" != "" -a ""$NUM"" != "0" ]
+then
+	# Yes, need message ack
+	NEED_ACK="1"
+fi
+
+
+if [ ""$NEED_ACK"" = "1" ]
+then
+	echo $MYCALL $VIA $WHO $NUM | awk '{ printf "%s>%s::%-9s:ack%d\n",$1,$2,$3,$4; }' >> $tmp_file1
+fi
+
+
+# Process "CMD" messages (send a reply message) -
+if [ ""$1"" = "CMD" ]
+then
+	# New message in response -
+	# N0CALL-11>WIDE1-1,WIDE2-2::N0CALL-8 :Got your msg 453 - I gotta send another message, {124
+	echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`getnextseq`';
+
+} { printf "%s>%s::%-9s:RCVD_MSG %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+
+fi
+
+
+# Process "MHEARD" messages -
+if [ ""$1"" = "MHEARD" ]
+then
+	# Directed message in response -
+	# N0CALL-11>WIDE1-1,WIDE2-2::N0CALL-8 :Got your msg 453 - I gotta send another message, {124
+	echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+} {
+
+printf "%s>%s,%s:{{This is where mheard data goes 1/2\n",$1,$3,$2;
+printf "%s>%s,%s:{{This is where mheard data goes 2/2\n",$1,$3,$2;
+
+}' >> $tmp_file1
+
+fi
+
+
+
+
+if [ ""$NEED_ACK"" = "1" ]
+then
+	echo $MYCALL $VIA $WHO $NUM | awk '{ printf "%s>%s::%-9s:ack%d\n",$1,$2,$3,$4; }' >> $tmp_file1
+fi
+
+
+
+for A in 1 2 3
+do
+	cp $tmp_file1 /home/direwolf/outbox
+	sleep 23
+done
+
+
+exit 0
+
+

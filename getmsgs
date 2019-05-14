@@ -12,7 +12,7 @@
 #LOGFILE=/home/direwolf/direwolf.log
 LOGFILE=/home/direwolf/kiss.log
 
-grep "^\[.*\] .*>.*:}.*::KA9CQL-11:.*{[0-9].*[0-9]$" ${LOGFILE}  | egrep -v -i "email" | awk -F"}" '{ if (NF >=2) print $2 }' | sed "s/>.*::KA9CQL/ KA9CQL/" | sed "s/:/ /" | sed "s/{/ :/" | awk '{ print $1,$NF,$0 }' | sort -u | awk '{ $1="";$2=""; $4="";print $0 }' | awk '{ printf "%s%s ",$1,$NF; for (i=2;i<NF;i++) { printf " %s",$i; };printf "\n" }'
+grep "^\[.*\] .*>.*:}.*::N0CALL-11:.*{[0-9].*[0-9]$" ${LOGFILE}  | egrep -v -i "email" | awk -F"}" '{ if (NF >=2) print $2 }' | sed "s/>.*::N0CALL/ N0CALL/" | sed "s/:/ /" | sed "s/{/ :/" | awk '{ print $1,$NF,$0 }' | sort -u | awk '{ $1="";$2=""; $4="";print $0 }' | awk '{ printf "%s%s ",$1,$NF; for (i=2;i<NF;i++) { printf " %s",$i; };printf "\n" }'
 
 exit 0
 

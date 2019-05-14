@@ -1,0 +1,12 @@
+#!/bin/bash
+#####################################
+# ackmsg - Acknowledge an APRS direct-message
+#
+# HISTORICAL INFORMATION -
+#
+#  2019-05-09  msipin  Created
+#####################################
+
+cd /home/direwolf
+(/usr/bin/nohup /home/direwolf/sendmsgack $*)&
+

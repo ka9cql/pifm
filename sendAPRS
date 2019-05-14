@@ -36,16 +36,23 @@ do
 	##/usr/bin/aplay /home/pifm/packet.Loc.wav 2>&1 > /dev/null
 
 	# Give packet to Direwolf's "kissutil"
-	tail -1 z.txt > /home/direwolf/outbox/z.txt
+	##tail -1 z.txt > /home/direwolf/outbox/z.txt
+	cp z.txt /home/direwolf/outbox
 
 	## LIVE VALUE -
 	##sleep 43 # Warpig-III value
 	##sleep 53 # Warpig-IV value
 	##sleep 97 # Warpig-V value
-	sleep 97 # Warpig-VI value
+	##sleep 97 # Warpig-VI value
+	sleep 97 # Warpig-VII value
 
-	## TEST VALUE -
+	## TEST VALUE (SHORT) -
 	##sleep 11
+
+	## TEST VALUE (LOOOOOOOOONNNNNG) -
+	#sleep 193	# 3 minutes and 13 seconds
+	#sleep 251	# 4 minutes and 11 seconds
+	#sleep 293	# A few seconds shy of 5 minutes
 
 done 2>&1 >> /home/pifm/aprs.log
 

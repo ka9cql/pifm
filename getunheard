@@ -12,7 +12,7 @@ tmp_file1=/dev/shm/.getunheard.$$.1
 
 trap "rm -f $tmp_file1; exit 0" 0 1 2 3 6 12 15
 
-MYCALL="KA9CQL-11"
+MYCALL="N0CALL-11"
 
 # Use whichever one we finally settle on
 #LOGFILE=/home/direwolf/direwolf.log
@@ -35,16 +35,4 @@ done | sort -u
 
 
 exit 0
-
-1:
-::KA9CQL-8.:ack443$
-::KA9CQL-8.:ack444$
-::KA9CQL-8.:ack445$
-
-KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :ack450
-KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :ack451
-KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :Got your msg 450 - Msg 450 {78
-KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :Got your msg 451 - Msg 451 5:53pm {79
-[0 00:58:32] KA9CQL-11>WIDE1-1,KA6PTJ-3*,WIDE2-1::KA9CQL-8 :Got your msg 450 - Msg 450 {78
-[0 00:58:33] KA9CQL-11>WIDE1-1,KA6PTJ-3*,WIDE2-1::KA9CQL-8 :Got your msg 451 - Msg 451 5:53pm {79
 

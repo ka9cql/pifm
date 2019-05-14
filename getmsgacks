@@ -13,19 +13,7 @@
 LOGFILE=/home/direwolf/kiss.log
 #LOGFILE=/home/direwolf/sccs/direwolf.log
 
-egrep "^\[.*KA9CQL.*>.*:ack[0-9].*[0-9]$|^KA9CQL.*>.*:ack[0-9].*[0-9]$" ${LOGFILE} | awk -F"::" '{ if (NF >= 2) print $2 }' | awk '{ printf "%s%s\n",$1,$2 }' | sed "s/:ack/:/" | sort -u
+egrep "^\[.*N0CALL.*>.*:ack[0-9].*[0-9]$|^N0CALL.*>.*:ack[0-9].*[0-9]$" ${LOGFILE} | awk -F"::" '{ if (NF >= 2) print $2 }' | awk '{ printf "%s%s\n",$1,$2 }' | sed "s/:ack/:/" | sort -u
 
 exit 0
-
-[0 22:19:20] KA9CQL-11>WIDE1-1,KELLER,KA6PTJ-3*,WIDE2::KA9CQL-8 :ack443
-KA9CQL-11>WIDE1-1,WIDE2-2::KA9CQL-8 :ack444
-
-root@balloon1:/home/direwolf# grep :ack sccs/direwolf.log | grep -v "::KA9CQL"
-[0L] KA9CQL-11>N9RZR-8:ack28
-[0L] KA9CQL-11>N9RZR-8:ack28
-[0L] KA9CQL-11>TCPIP::N9RZR-8:ack28
-[0.3] KD6DCN-5>APRS,KELLER,WIDE2*:}AO92>APWW10,TCPIP*,KD6DCN-5*::K4LV-9   :ack38<0x0d>
-[0.4] K4LV-9>APK102,N6EX-1,KELLER,WIDE2*::AO92     :ackRV}<0x0d>
-[0.4] N6KMA>APMI06,KELLER,WIDE2*:}AO92>APWW10,TCPIP,N6KMA*::K4LV-9   :ack38
-[0.4] K4LV-9>APK102,N6EX-1,KELLER,WIDE2*::AO92     :ackRX}<0x0d>
 

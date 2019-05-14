@@ -12,7 +12,7 @@ trap "rm -f $tmp_file1 $tmp_file2 $tmp_file3; exit 0" 0 1 2 3 6 12 15
 
 SEQFILE=/home/direwolf/.SEQ_NUM
 
-MYCALL="KA9CQL-11"
+MYCALL="N0CALL-11"
 
 # TESTING TESTING -
 VIA="WIDE1-1,WIDE2-2"
@@ -43,7 +43,7 @@ then
 	# Respond to new messages
 
 	# NEW MSGS -
-	# KA9CQL-8:446  This is totes msg 446 and you are not acking it
+	# N0CALL-8:446  This is totes msg 446 and you are not acking it
 	cat $tmp_file3 | sed "s/:/ /" | awk 'BEGIN {
 
 SEQ_NO='`getnextseq`';
@@ -51,10 +51,10 @@ SEQ_NO='`getnextseq`';
 
 #   $1      $2     $3  $4 .............................$(NF-1) $NF
 #  $TO     $ACKTO
-# KA9CQL-8   446  This is totes msg 446 and you are not acking it
+# N0CALL-8   446  This is totes msg 446 and you are not acking it
 
 # AX.25 VERSION -
-# KA9CQL-11>WIDE1-1,WIDE2-1::KA9CQL-8 :Test message 47 from deskpig {.SEQ_NUM
+# N0CALL-11>WIDE1-1,WIDE2-1::N0CALL-8 :Test message 47 from deskpig {.SEQ_NUM
 printf "'${MYCALL}'>'${VIA}'::%-9s:Got your msg %d -",$1,$2;
 for (i=3;((i<=NF) && (i <= 7));i++) {
 	printf " %s",$i;
@@ -84,10 +84,4 @@ printf "FINAL_SEQ_NUM: %d\n",SEQ_NO+NR-1;
 fi
 
 exit 0
-
-
-KA9CQL-11>WIDE1-1,WIDE2-2::N9RZR-8  :Got your msg 36 - sipylogic 3 {122
-KA9CQL-11>WIDE1-1,WIDE2-2::N9RZR-8  :Got your msg 37 - sipylogic 4 {123
-[0 06:39:03] KA9CQL-11>WIDE1-1,KA6PTJ-3*,WIDE2-1::N9RZR-8  :Got your msg 36 - sipylogic 3 {122
-[0 06:39:04] KA9CQL-11>WIDE1-1,KA6PTJ-3,KELLER,WIDE2*::N9RZR-8  :Got your msg 37 - sipylogic 4 {123
 
