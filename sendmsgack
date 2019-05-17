@@ -5,6 +5,9 @@
 # HISTORICAL INFORMATION -
 #
 #  2019-05-09  msipin  Created
+#  2019-05-16  msipin  Increased inter-ack repeat timer above 31, as some
+#                      gateways reportedly supress messages that repeat over
+#                      less than 31 seconds.
 #####################################
 
 tmp_file1=/dev/shm/sendmsgack.$$.1
@@ -93,7 +96,7 @@ fi
 for A in 1 2 3
 do
 	cp $tmp_file1 /home/direwolf/outbox
-	sleep 23
+	sleep 37
 done
 
 
