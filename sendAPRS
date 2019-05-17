@@ -11,6 +11,7 @@
 #  2019-01-16  msipin  Switched back to using the Baofeng 888 (Warpigs V, VI and beyond - for 2-way
 #                      APRS-based comms!)
 #  2019-05-03  msipin  Integrated with Direwolf + kissutil
+#  2019-05-16  msipin  Stopped logging to aprs.log (redundant to position reports and GPS/time/temp logs)
 ###########################
 
 PATH=.:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/pifm
@@ -27,7 +28,7 @@ cd /home/pifm
 
 while [ 1 ]
 do
-	/home/pifm/makePacket.sh -q
+	/home/pifm/makePacket.sh -q >/dev/null
 
 	## Play packet (wav) file out via BCM built-in oscillator
 	##/home/pifm/pifm /home/pifm/packet.Loc.wav ${FREQ} 44100 mono 4 2>&1 > /dev/null
@@ -54,7 +55,7 @@ do
 	#sleep 251	# 4 minutes and 11 seconds
 	#sleep 293	# A few seconds shy of 5 minutes
 
-done 2>&1 >> /home/pifm/aprs.log
+done
 
 exit 0
 
