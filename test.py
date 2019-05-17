@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """
-Reads & Prints KISS frames from a TCP Socket.
+Reads KISS frames from a TCP Socket, looks for APRS messages destined for the given
+callsign (specify on command-line), and calls an external parse/ack/respond program
+(ackmsg) if the callsigns match.
 
 """
 
@@ -23,9 +25,9 @@ def print_frame3(f):
     dst = pf.destination
     path = pf.path
     info = pf.info.data.decode('UTF-8')
-    info = info.replace("\n"," ")
-    info = info.replace("\r"," ")
-    info = info.replace("\t"," ")
+    info = info.replace("\n","")
+    info = info.replace("\r","")
+    info = info.replace("\t","")
 
     print("Src:  [%s]" % src)
     print("Dst:  [%s]" % dst)
@@ -89,9 +91,9 @@ def process_frame(f):
         #info = pf.info 	# THIS IS AN OBJECT, NOT A STRING! >:{
         try:
             info = pf.info.data.decode('UTF-8')	# This is stringified object ;)
-            info = info.replace("\n"," ")
-            info = info.replace("\r"," ")
-            info = info.replace("\t"," ")
+            info = info.replace("\n","")
+            info = info.replace("\r","")
+            info = info.replace("\t","")
         except:
             # In case we can't convert data
             info=""
@@ -240,11 +242,11 @@ def print_frame(frame):
     print(aprs.Frame(frame[1:]))
 
 def main():
-
-    # If a callsign was provided on the command-line, pick it up
     global CALLSIGN
 
     print("Default callsign: %s" % CALLSIGN)
+
+    # If a callsign was provided on the command-line, pick it up
     if len(sys.argv) > 1:
         CALLSIGN = sys.argv[1]
     print("Callsign: %s" % CALLSIGN)
