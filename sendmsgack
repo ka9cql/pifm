@@ -7,7 +7,8 @@
 #  2019-05-09  msipin  Created
 #  2019-05-16  msipin  Increased inter-ack repeat timer above 31, as some
 #                      gateways reportedly supress messages that repeat over
-#                      less than 31 seconds.
+#                      less than 31 seconds. Added "MYCALL" as first passed-in
+#                      command-line parameter.
 #####################################
 
 tmp_file1=/dev/shm/sendmsgack.$$.1
@@ -16,16 +17,15 @@ tmp_file1=/dev/shm/sendmsgack.$$.1
 trap "rm -f $tmp_file1; exit 0" 0 1 2 3 6 12 15
 
 
-MYCALL="N0CALL-11"
-
 # TESTING TESTING -
 VIA="WIDE1-1,WIDE2-2"
 # FLIGHT FLIGHT -
 #VIA="BEACON,WIDE2-2"
 
-WHO=$1
-NUM=$2
-shift 2
+MYCALL=$1
+WHO=$2
+NUM=$3
+shift 3
 
 rm -f $tmp_file1
 

@@ -168,7 +168,7 @@ def process_frame(f):
         #cmd = "(/usr/bin/nohup /home/direwolf/sendmsgack " +  mf + " " + mid + ")&"
         #print("DEBUG: CMD: [%s]\n" % cmd)
         try:
-            subprocess.run(["/home/direwolf/ackmsg", mf, mid, msg])
+            subprocess.run(["/home/direwolf/ackmsg", mt, mf, mid, msg])
         except:
             # Don't know what happened. Sometimes we see: "Callsign can not be converted to string" or sumpun...?
             pass
