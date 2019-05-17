@@ -72,6 +72,8 @@ def print_frame3(f):
 
 
 def process_frame(f):
+    global CALLSIGN
+
     #print("Raw Frame={}".format(f[1:]))
 
     src=""
@@ -115,26 +117,39 @@ def process_frame(f):
         # First, try parsing the entire thing, just to ensure it's in the correct format
         # m1 = re.search(r'}.*>.*::.*:.*{.*', info) # This format REQUIRES a message ID
         m1 = re.search(r'}.*>.*::.*:.*', info)	    # This format DOES NOT require a message ID
+        m2 = re.search(r':.*:.*', info)	    # This format DOES NOT require a message ID
         if m1:
-
-            # Now try parsing each section
+            # Try parsing "from" using close-curly-brace format
             m1 = re.search(r'}(.+?)>', info)
             if m1:
+                # Found close-curly-brace, so use this field as FROM
                 mf = m1.group(1)
+            else:
+                # Didn't have close-curly-brace, so use PACKET SOURCE as FROM
+                mf = src
+        else:
+            if m2:
+                m3 = re.search(r':(.+?):', info)
+                if m3:
+                    mt = m3.group(1)
 
+        if m1 or m2:
             m1 = re.search(r'::(.+?):', info)
             if m1:
                 mt = m1.group(1)
 
-            m1 = re.search(r':(.+?){', info)
+            m1 = re.search(r':.*:(.+?){', info)
             if m1:
-                m2 = re.search(r':.*:(.+?)$',m1.group(1))
+                msg = m1.group(1)
+            else:
+                m2 = re.search(r':.*:(.+?)$', info)
                 if m2:
                     msg = m2.group(1)
 
             m1 = re.search(r'{(.+?)$', info)
             if m1:
                 mid = m1.group(1)
+
     except:
         pass
 
@@ -152,7 +167,11 @@ def process_frame(f):
     if not mid == "" and mt == CALLSIGN:
         #cmd = "(/usr/bin/nohup /home/direwolf/sendmsgack " +  mf + " " + mid + ")&"
         #print("DEBUG: CMD: [%s]\n" % cmd)
-        subprocess.run(["/home/direwolf/ackmsg", mf, mid, msg])
+        try:
+            subprocess.run(["/home/direwolf/ackmsg", mf, mid, msg])
+        except:
+            # Don't know what happened. Sometimes we see: "Callsign can not be converted to string" or sumpun...?
+            pass
 
 
 
