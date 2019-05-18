@@ -53,7 +53,7 @@ then
 	# N0CALL-11>WIDE1-1,WIDE2-2::N0CALL-8 :Got your msg 453 - I gotta send another message, {124
 	echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
 
-SEQ_NO='`getnextseq`';
+SEQ_NO='`/usr/local/bin/getnextseq`';
 
 } { printf "%s>%s::%-9s:RCVD_MSG %d - ",$1,$2,$3,$4;
 
