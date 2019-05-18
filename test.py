@@ -21,8 +21,8 @@ def print_frame3(f):
     print("Raw Frame={}".format(f[1:]))
 
     pf = aprs.parse_frame(f)
-    src = pf.source
-    dst = pf.destination
+    src = pf.source.callsign.decode(encoding='UTF-8')
+    dst = pf.destination.callsign.decode(encoding='UTF-8')
     path = pf.path
     info = pf.info.data.decode('UTF-8')
     info = info.replace("\n","")
@@ -85,8 +85,8 @@ def process_frame(f):
 
     try:
         pf = aprs.parse_frame(f)
-        src = pf.source
-        dst = pf.destination
+        src = pf.source.callsign.decode(encoding='UTF-8')
+        dst = pf.destination.callsign.decode(encoding='UTF-8')
         path = pf.path
         #info = pf.info 	# THIS IS AN OBJECT, NOT A STRING! >:{
         try:
@@ -166,13 +166,13 @@ def process_frame(f):
     print("")
 
     # If message is TO payload, ack it and send a response
-    if not mid == "" and mt == CALLSIGN:
-        #cmd = "(/usr/bin/nohup /home/direwolf/sendmsgack " +  mf + " " + mid + ")&"
-        #print("DEBUG: CMD: [%s]\n" % cmd)
+    if (not mid == "") and (mt == CALLSIGN):
         try:
+            #print("DEBUG: Calling ackmsg...")
             subprocess.run(["/home/direwolf/ackmsg", mt, mf, mid, msg])
+            #print("DEBUG: Back from calling ackmsg...")
         except:
-            # Don't know what happened. Sometimes we see: "Callsign can not be converted to string" or sumpun...?
+            print("DEBUG: *EXCEPTION* while trying to call ackmsg!")
             pass
 
 
