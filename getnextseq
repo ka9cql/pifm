@@ -7,7 +7,7 @@
 #  2019-05-02  msipin  Created
 ##########################################
 
-SEQFILE=/home/direwolf/.SEQ_NUM
+SEQFILE=/usr/local/bin/.SEQ_NUM
 
 CURR=`cat ${SEQFILE}`
 NEW=`expr $CURR + 1`
