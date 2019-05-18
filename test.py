@@ -161,7 +161,8 @@ def process_frame(f):
     # print("MSG_ID     [%s]" % mid)
 
     # The message might have <CR> in it, so print it last on the line
-    print("%-9s > %-9s ID:%3s  MSG[%s]" % (mf,mt,mid,msg))
+    if not mf == "" and not mt == "":
+        print("%-9s > %-9s ID:%3s  MSG[%s]" % (mf,mt,mid,msg))
 
     # If message is TO payload, ack it and send a response
     if (not mid == "") and (mt == CALLSIGN):
