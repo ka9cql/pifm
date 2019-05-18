@@ -107,7 +107,7 @@ def process_frame(f):
     #print("Path: [%s]" % path)
     #print("Info: [%s]" % info)
 
-    print("Src:[%s]  Dst:[%s]  Path:[%s]  Info:[%s]" % (src,dst,path,info))
+    #print("Src:[%s]  Dst:[%s]  Path:[%s]  Info:[%s]" % (src,dst,path,info))
 
     # Start with frame from/to/info and message id of zero
     mf=src
@@ -161,9 +161,7 @@ def process_frame(f):
     # print("MSG_ID     [%s]" % mid)
 
     # The message might have <CR> in it, so print it last on the line
-    print("MSG-FROM:[%s]  MSG-TO:[%s]  MSG_ID:[%s]  MSG:[%s]" % (mf,mt,mid,msg))
-
-    print("")
+    print("%-9s > %-9s ID:%3s  MSG[%s]" % (mf,mt,mid,msg))
 
     # If message is TO payload, ack it and send a response
     if (not mid == "") and (mt == CALLSIGN):
@@ -175,6 +173,7 @@ def process_frame(f):
             print("DEBUG: *EXCEPTION* while trying to call ackmsg!")
             pass
 
+    #print("")
 
 
 
