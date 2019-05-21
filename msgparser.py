@@ -4,6 +4,8 @@ Reads KISS frames from a TCP Socket, looks for APRS messages destined for the gi
 callsign (specify on command-line), and calls an external parse/ack/respond program
 (ackmsg) if the callsigns match.
 
+2019-05-21  msipin  Added timestamp to output lines (thanks Eric!)
+
 """
 
 import aprs
@@ -12,6 +14,8 @@ import re
 import binascii
 import subprocess
 import sys
+from datetime import datetime, timezone
+
 
 
 # The callsign the payload will respond to (can be overridden on command-line)
@@ -162,7 +166,9 @@ def process_frame(f):
 
     # The message might have <CR> in it, so print it last on the line
     if not mf == "" and not mt == "":
-        print("%-9s > %-9s ID:%3s  MSG[%s]" % (mf,mt,mid,msg))
+        # '2019-05-21 07:15:58'
+        ahora = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+        print("%s %-9s > %-9s ID:%3s  MSG[%s]" % (ahora,mf,mt,mid,msg))
 
     # If message is TO payload, ack it and send a response
     if (not mid == "") and (mt == CALLSIGN):
