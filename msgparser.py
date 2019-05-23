@@ -5,6 +5,7 @@ callsign (specify on command-line), and calls an external parse/ack/respond prog
 (ackmsg) if the callsigns match.
 
 2019-05-21  msipin  Added timestamp to output lines (thanks Eric!)
+                    Added space between "ID:" and numeric value for that ID.
 
 """
 
@@ -168,7 +169,9 @@ def process_frame(f):
     if not mf == "" and not mt == "":
         # '2019-05-21 07:15:58'
         ahora = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-        print("%s %-9s > %-9s ID:%3s  MSG[%s]" % (ahora,mf,mt,mid,msg))
+        ## FOR TESTING - Flush output immediately -
+        ## print("%s %-9s > %-9s ID: %3s  MSG[%s]" % (ahora,mf,mt,mid,msg), flush=True)
+        print("%s %-9s > %-9s ID: %3s  MSG[%s]" % (ahora,mf,mt,mid,msg))
 
     # If message is TO payload, ack it and send a response
     if (not mid == "") and (mt == CALLSIGN):
