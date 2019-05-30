@@ -19,6 +19,7 @@
 #                      oscillator and via PCM0/a USB audio dongle.
 #  2019-04-28  msipin  Added trailing space after all data to separate valid data from last digit "weird" decode
 #  2019-05-02  msipin  Adapted to using getDirewolfData, rather than just sending temperature data
+#  2019-05-30  msipin  Conserved more space in transmission
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -115,7 +116,8 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="Warpig-VII "
+##MSG="Warpig-VII "
+MSG="WP7 "	# Shorten to avoid exceeding APRS comment length
 
 
 rm -f $AUDIO_FILE
@@ -131,24 +133,28 @@ rm -f z.txt
 
 #echo "${MYCALL}>APNXXX:#First test packet" >> z.txt
 
-# THE CURRENT MOBILE STANDARD - echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-##echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-##echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+# THE CURRENT MOBILE STANDARD - echo "${MYCALL}>WIDE1-1,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+##echo "${MYCALL}>BEACON,WIDE1*:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+##echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ## 2018-11-02 WORKS AGAINST KELLER, from home with chimney 2m/440 antenna (NOTE: MUST BE REPEATED 2x FOR VOX!)
-##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+##echo "${MYCALL}>BEACON,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ## 2018-11-03 Tried this because we're launching at night, and theorize we'll need more help getting
 ##            into an iGate (NOTE: DON'T FORGET TO DO IT 2x FOR Baofeng 888 + VOX!)
 ## 2018-11-04  IT JUST SO HAPPENS that this same z.txt file format will work with *BOTH* the
 ##             Baofeng 888 + VOX and the BCM built-in oscillator!!!
-echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
-echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF} " >> z.txt
+#echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+#echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+
+# 2019-05-10 Experiment: Switched "position with timestamp, NO MESSAGING" to "position w/time WITH messaging"
+echo "${MYCALL}>BEACON,WIDE2-1:@${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,WIDE2-1:@${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ## Match Eric's radio output - WORKS on my house chimney 2m/440 antenna
-##echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-##echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+#echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+#echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
 ## FOR SOME REASON, the last packet does not seem to send properly when sent using BCM built-in oscillator, so put one or two
 ## more with "gibberish" to flush the others
