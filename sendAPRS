@@ -45,7 +45,9 @@ do
 	##sleep 53 # Warpig-IV value
 	##sleep 97 # Warpig-V value
 	##sleep 97 # Warpig-VI value
-	sleep 97 # Warpig-VII value
+	##sleep 97 # Warpig-VII value
+	##sleep 97 # Warpig-VIII value
+	sleep 97 # Warpig-IX value
 
 	## TEST VALUE (SHORT) -
 	##sleep 11

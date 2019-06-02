@@ -169,9 +169,7 @@ def process_frame(f):
     if not mf == "" and not mt == "":
         # '2019-05-21 07:15:58'
         ahora = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-        ## FOR TESTING - Flush output immediately -
-        ## print("%s %-9s > %-9s ID: %3s  MSG[%s]" % (ahora,mf,mt,mid,msg), flush=True)
-        print("%s %-9s > %-9s ID: %3s  MSG[%s]" % (ahora,mf,mt,mid,msg))
+        print("%s %-9s > %-9s ID: %3s  MSG[%s]" % (ahora,mf,mt,mid,msg), flush=True)
 
     # If message is TO payload, ack it and send a response
     if (not mid == "") and (mt == CALLSIGN):

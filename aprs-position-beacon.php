@@ -14,7 +14,7 @@ function process_gps() {
 
 	// Settings & variables
 	$callsign = "N0CALL-11";			// Your callsign
-	$comment = "Warpig-III Position report";		// APRS comment
+	$comment = "WP9 ";		// APRS comment
 
 	//$url = 'http://localhost/gpsd.php?op=json';
 	//$content = file_get_contents($url);
