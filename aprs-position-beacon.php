@@ -14,7 +14,7 @@ function process_gps() {
 
 	// Settings & variables
 	$callsign = "N0CALL-11";			// Your callsign
-	$comment = "WP9 ";		// APRS comment
+	$comment = "WP10 ";		// APRS comment
 
 	//$url = 'http://localhost/gpsd.php?op=json';
 	//$content = file_get_contents($url);

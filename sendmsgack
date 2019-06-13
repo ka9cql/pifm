@@ -9,6 +9,8 @@
 #                      gateways reportedly supress messages that repeat over
 #                      less than 31 seconds. Added "MYCALL" as first passed-in
 #                      command-line parameter.
+#  2019-06-02  msipin  Process "CMD high_alt" command to set the GPS to high-altitude
+#                      mode (using KJ6FO's 44-byte command).
 #####################################
 
 tmp_file1=/dev/shm/sendmsgack.$$.1
@@ -65,6 +67,30 @@ printf "{%d\n",'SEQ_NO';
 }' >> $tmp_file1
 
 fi
+
+
+# Process HIGH-ALTITUDE-GPS-MODE command
+if [ ""$1"" = "CMD" -a ""$2"" = "high_alt" ]
+then
+	# Set GPS to high-altitude mode
+	/usr/local/bin/do_high_alt
+
+	# Tell user we did it!
+	echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:GPS HIGH-ALTITUDE-MODE SET %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+
+fi
+
 
 
 # Process "MHEARD" messages -

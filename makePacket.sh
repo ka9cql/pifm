@@ -115,8 +115,8 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="WP9 "
-##MSG="BP9 "	# Shorten to avoid exceeding APRS comment length
+MSG="WP10 "
+##MSG="BP10 "	# Shorten to avoid exceeding APRS comment length
 
 
 rm -f $AUDIO_FILE
