@@ -14,7 +14,12 @@ echo
 
 # This repo's executables and scripts -
 for A in pifm \
-	makePacket.sh
+	makePacket.sh \
+	ackmsg \
+	getnextseq \
+	msgparser.py \
+	sendmsgack \
+	.SEQ_NUM
 do
 	ln -s ${REPO1_DIR}/$A /usr/local/bin
 done
@@ -32,7 +37,9 @@ for A in atest \
 	direwolf \
 	dwespeak.sh \
 	ll2utm \
-	log2gpx 
+	log2gpx \
+	cm108 \
+	kissutil
 do
 	ln -s ${REPO2_DIR}/$A /usr/local/bin
 done
