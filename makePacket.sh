@@ -19,6 +19,7 @@
 #                      oscillator and via PCM0/a USB audio dongle.
 #  2019-04-28  msipin  Added trailing space after all data to separate valid data from last digit "weird" decode
 #  2019-05-02  msipin  Adapted to using getDirewolfData, rather than just sending temperature data
+#  2019-05-30  msipin  Conserved more space in transmission
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -115,8 +116,13 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
+<<<<<<< HEAD
 MSG="WP10 "
 ##MSG="BP10 "	# Shorten to avoid exceeding APRS comment length
+=======
+##MSG="Warpig-VII "
+MSG="WP7 "	# Shorten to avoid exceeding APRS comment length
+>>>>>>> dd055c6f6c5f750d5d39fbc52c83defc1889c66b
 
 
 rm -f $AUDIO_FILE
