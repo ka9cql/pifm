@@ -6,6 +6,9 @@ callsign (specify on command-line), and calls an external parse/ack/respond prog
 
 2019-05-21  msipin  Added timestamp to output lines (thanks Eric!)
                     Added space between "ID:" and numeric value for that ID.
+2019-10-12  msipin  Stripped trailing spaces from MSG-TO (mt) in process_frame. This
+                    never bothered us before because my call (KA9CQL) was long enough
+                    to not allow this case. Shorter callsigns (N9RZR) triggered it.
 
 """
 
@@ -20,7 +23,7 @@ from datetime import datetime, timezone
 
 
 # The callsign the payload will respond to (can be overridden on command-line)
-CALLSIGN="N0CALL"
+CALLSIGN="N0CALL-11"
 
 def print_frame3(f):
     print("Raw Frame={}".format(f[1:]))
@@ -70,6 +73,7 @@ def print_frame3(f):
 
     print("\nINFO:      [%s]\n" % info)
     print("MSG-FROM   [%s]" % mf)
+    mt = mt.strip()
     print("MSG-TO     [%s]" % mt)
     print("MSG        [%s]" % msg)
     print("MSG_ID     [%s]" % mid)
@@ -160,10 +164,11 @@ def process_frame(f):
     except:
         pass
 
-    # print("MSG-FROM   [%s]" % mf)
-    # print("MSG-TO     [%s]" % mt)
-    # print("MSG        [%s]" % msg)
-    # print("MSG_ID     [%s]" % mid)
+    #print("MSG-FROM   [%s]" % mf)
+    mt = mt.strip()
+    #print("MSG-TO     [%s]" % mt)
+    #print("MSG        [%s]" % msg)
+    #print("MSG_ID     [%s]" % mid)
 
     # The message might have <CR> in it, so print it last on the line
     if not mf == "" and not mt == "":
@@ -251,12 +256,12 @@ def print_frame(frame):
 def main():
     global CALLSIGN
 
-    print("Default callsign: %s" % CALLSIGN)
+    print("Default callsign: [%s]" % CALLSIGN)
 
     # If a callsign was provided on the command-line, pick it up
     if len(sys.argv) > 1:
-        CALLSIGN = sys.argv[1]
-    print("Callsign: %s" % CALLSIGN)
+        CALLSIGN = sys.argv[1].strip()
+    print("Callsign: [%s]" % CALLSIGN)
 
 
     ki = kiss.TCPKISS(host='localhost', port=8001)

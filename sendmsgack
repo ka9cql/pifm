@@ -11,6 +11,14 @@
 #                      command-line parameter.
 #  2019-06-02  msipin  Process "CMD high_alt" command to set the GPS to high-altitude
 #                      mode (using KJ6FO's 44-byte command).
+#  2019-10-12  msipin  Added "CMD set_time" command to set the system time based upon
+#                      the GPS date/time.
+#  2019-10-13  msipin  Added "CMD do_video" command to take a 30-second video. Also added
+#                      filter to only accept this command from sysadmins (e.g. N0CALL, N1CALL,
+#                      N2CALL).
+#  2019-10-14  msipin  Added replay-protection
+#  2019-10-15  msipin  Added status message (date, disk used, disk free). Implemented a crude
+#                      MHEARD reply.
 #####################################
 
 tmp_file1=/dev/shm/sendmsgack.$$.1
@@ -34,11 +42,47 @@ rm -f $tmp_file1
 # Default to don't-need-ack
 NEED_ACK="0"
 
+# Default to NOT-A-REPLAY
+REPLAY_CHECK_DIR=/usr/local/bin/seen
+REPLAY=0
+
+# Default to "this user is not a sysadmin"
+SYSADMIN=0
+
+
+# Drop ssid ("-11") from the callsign (to be tested later)
+ID=`echo $WHO | awk -F"-" '{ print $1 }'`
+
+
+
+# See if this command is from a "sysadmin" (e.g. N0CALL-xx or N1CALL-xx or N2CALL-xx)
+if [ ""$ID"" = "N0CALL" -o ""$ID"" = "N1CALL" -o ""$ID"" = "N2CALL" ]
+then
+	SYSADMIN=1
+else
+	SYSADMIN=0
+fi
+
+
+
 # If message id is not zero, then we need to send an acknowledgement
 if [ ""$NUM"" != "" -a ""$NUM"" != "0" ]
 then
 	# Yes, need message ack
 	NEED_ACK="1"
+
+	# See if message is a "replay" of one previously seen
+	if [ -e ${REPLAY_CHECK_DIR}/${NUM} ]
+	then
+		echo "THIS MESSAGE HAS BEEN SEEN BEFORE! (NUM=${NUM})"
+
+		# This message is a repeat of one already heard
+		REPLAY=1
+	else
+		echo "This is a new message (NUM=${NUM})"
+		REPLAY=0
+	fi
+
 fi
 
 
@@ -69,11 +113,13 @@ printf "{%d\n",'SEQ_NO';
 fi
 
 
+
+
 # Process HIGH-ALTITUDE-GPS-MODE command
 if [ ""$1"" = "CMD" -a ""$2"" = "high_alt" ]
 then
 	# Set GPS to high-altitude mode
-	/usr/local/bin/do_high_alt
+	sudo /usr/local/bin/do_high_alt
 
 	# Tell user we did it!
 	echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
@@ -93,19 +139,239 @@ fi
 
 
 
+# Process SET-TIME command
+if [ ""$1"" = "CMD" -a ""$2"" = "set_time" ]
+then
+	# Set system time to GPS-derived clock
+	sudo /usr/local/bin/do_time
+
+	# Tell user we did it!
+	echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:SYSTEM TIME SET FROM GPS %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+
+fi
+
+
+# Process STATUS command
+if [ ""$1"" = "CMD" -a ""$2"" = "status" ]
+then
+	# Get current date/time
+	NOW=`date`
+	# Figure how many pictues
+	NUM_PICS=`ls -1 /usr/local/bin/pictures | wc -l`
+
+	# Issue status command, pick up results
+	RSLT=`echo -n ${NOW}" "${NUM_PICS};df -v | grep .dev.root | awk '{ print "/"$3"/"$4 }'`
+
+	# Return status to user
+	echo $MYCALL $VIA $WHO $NUM $RSLT | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:STATUS %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+
+fi
+
+
+
+
+# Process DO-VIDEO command
+if [ ""$1"" = "CMD" -a ""$2"" = "do_video" ]
+then
+	# Only accept this command from a "sysadmin"
+	if [ ""$SYSADMIN"" = 1 ]
+	then
+		# Only execute this command if we haven't seen this message (number) before
+		if [ ""$REPLAY"" = 0 ]
+		then
+
+			# Take a 30-second video **IN** **THE** **BACKGROUND**
+			(/usr/bin/nohup /usr/local/bin/do_video 2>&1 >/dev/null)&
+
+			# Tell user we did it!
+			echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:STARTED VIDEO %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+
+			# Implement the "replay-protection" (file) on this message number
+			touch ${REPLAY_CHECK_DIR}/${NUM}
+
+		else
+			# We've seen this message before. Tell user "Thanks, but no thanks"
+			echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:Thank you! %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+
+		fi
+	else
+		# Wrong user sent this command. Don't do it!
+		# Tell user we are *NOT* going to do it!
+		echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:RETRY COMMAND %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+	fi
+
+fi
+
+
+# Process DO-REBOOT command
+if [ ""$1"" = "CMD" -a ""$2"" = "do_reboot" ]
+then
+	# Only accept this command if from a "sysadmin"
+	if [ ""$SYSADMIN"" = 1 ]
+	then
+		# Only execute this command if we haven't seen this message (number) before
+		if [ ""$REPLAY"" = 0 ]
+		then
+
+			# Que up a system reboot
+			(/usr/bin/nohup /usr/local/bin/do_reboot 2>&1 >/dev/null)&
+
+			# Tell user we did it!
+			echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:REBOOT QUEUED %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+
+			# Implement the "replay-protection" (file) on this message number
+			touch ${REPLAY_CHECK_DIR}/${NUM}
+
+		else
+			# We've seen this message before. Tell user "Thanks, but no thanks"
+			echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:Thank you! %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+
+		fi
+	else
+		# Wrong user sent this command. Don't do it!
+		# Tell user we are *NOT* going to do it!
+		echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:RETRY COMMAND %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' >> $tmp_file1
+	fi
+
+fi
+
+
+
+
+
 # Process "MHEARD" messages -
 if [ ""$1"" = "MHEARD" ]
 then
-	# Directed message in response -
-	# N0CALL-11>WIDE1-1,WIDE2-2::N0CALL-8 :Got your msg 453 - I gotta send another message, {124
-	echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+	# Only execute this command if we haven't seen this message (number) before
+	if [ ""$REPLAY"" = 0 ]
+	then
+		# Directed message in response -
+		# N0CALL-11>WIDE1-1,WIDE2-2::N0CALL-8 :Got your msg 453 - I gotta send another message, {124
 
-} {
+		# Pickup last N-stations heard (*OTHER* than "sysadmins")
+		STATIONS=`tail -100 /usr/local/bin/APRSdata.log | egrep -v "N0CALL|N1CALL|N2CALL" | awk '{ print $3 }' | egrep "^[A-Z][0-9][A-Z]|[A-Z][A-Z][0-9][A-Z]" | tail -7 | awk '{ printf "%sZyZ",$0 }'`
 
-printf "%s>%s,%s:{{This is where mheard data goes 1/2\n",$1,$3,$2;
-printf "%s>%s,%s:{{This is where mheard data goes 2/2\n",$1,$3,$2;
+		# Return station-list to user
+		echo $MYCALL $VIA $WHO $NUM $STATIONS | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:MHEARD %d ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
+
+}' | sed "s/ZyZ/ /g" >> $tmp_file1
+
+		# Implement the "replay-protection" (file) on this message number
+		touch ${REPLAY_CHECK_DIR}/${NUM}
+
+	else
+		# We've seen this message before. Tell user "Thanks, but no thanks"
+		echo $MYCALL $VIA $WHO $NUM $* | awk 'BEGIN {
+
+SEQ_NO='`/usr/local/bin/getnextseq`';
+
+} { printf "%s>%s::%-9s:Thank you! %d - ",$1,$2,$3,$4;
+
+for (i=5; i<= NF; i++) {
+    printf " %s", $i;
+}
+printf "{%d\n",'SEQ_NO';
 
 }' >> $tmp_file1
+
+	fi
 
 fi
 

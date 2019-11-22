@@ -19,7 +19,10 @@
 #                      oscillator and via PCM0/a USB audio dongle.
 #  2019-04-28  msipin  Added trailing space after all data to separate valid data from last digit "weird" decode
 #  2019-05-02  msipin  Adapted to using getDirewolfData, rather than just sending temperature data
-#  2019-05-30  msipin  Conserved more space in transmission
+#  2019-11-02  msipin  Changed APRS PATH between WIDE2-1 and WIDE1-1 based upon altitude. (WIDE2-1 only used
+#                      at "lower altitudes".) <<<--- NOTE: THIS STATEMENT IS WRONG - see the next line!
+#  2019-11-05  msipin  FIXED the altitude-based APRS PATH manipulation (I had it reversed!) WIDE2-1 is used at
+#                      *HIGHER* altitudes, and WIDE1-1 is digi-fill-in, used only at LOWER altitudes.
 ######################
 
 # All last-known-good data will be written to files in the following directory -
@@ -43,7 +46,7 @@ fi
 
 
 # Your callsign (MANDATORY!) - Use "dash-eleven" ("-11") to automatically mark as a balloon
-MYCALL="N0CALL-11"
+MYCALL="N0CALL-12"
 
 # Desired -
 # ZULU_DDHHMM="110736"
@@ -116,8 +119,8 @@ HDG="090"
 SPD="001"
 
 # Message, freeform: "This is a message"
-MSG="WP10 "
-##MSG="BP10 "	# Shorten to avoid exceeding APRS comment length
+MSG="WP12 "
+##MSG="BP9 "	# Shorten to avoid exceeding APRS comment length
 
 
 rm -f $AUDIO_FILE
@@ -148,9 +151,21 @@ rm -f z.txt
 #echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 #echo "${MYCALL}>BEACON,WIDE2-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
 
-# 2019-05-10 Experiment: Switched "position with timestamp, NO MESSAGING" to "position w/time WITH messaging"
-echo "${MYCALL}>BEACON,WIDE2-1:@${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
-echo "${MYCALL}>BEACON,WIDE2-1:@${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+# 2019-05-10 Switched "position with timestamp, NO MESSAGING" to "position w/time WITH messaging"
+#echo "${MYCALL}>BEACON,WIDE2-1:@${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+#echo "${MYCALL}>BEACON,WIDE2-1:@${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+
+# 2019-11-02 Adapt PATH based upon altitude
+PATH="WIDE1-1,WIDE2-1"		# Default path of WIDE1-1,WIDE2-1 ("the current mobile standard")
+if [ ""${ALT}"" -gt 12000 ]
+then
+	# "Higher" altitude, so use WIDE2-1 PATH (Bob Bruninga's suggested "best choice", if you can only pick one!)
+	PATH="WIDE2-1"
+fi
+echo "${MYCALL}>BEACON,${PATH}:@${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+echo "${MYCALL}>BEACON,${PATH}:@${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
+
+
 
 ## Match Eric's radio output - WORKS on my house chimney 2m/440 antenna
 #echo "${MYCALL}>APDR10,WIDE1-1:/${ZULU_DDHHMM}z${LAT}/${LON}O${MSG}/A=${ALT} ${DEGF}" >> z.txt
