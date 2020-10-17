@@ -12,6 +12,9 @@
 #                      APRS-based comms!)
 #  2019-05-03  msipin  Integrated with Direwolf + kissutil
 #  2019-05-16  msipin  Stopped logging to aprs.log (redundant to position reports and GPS/time/temp logs)
+#  2019-11-03  msipin  We're building a "floater" that will use the BCM chip for APRS, so don't have to
+#                      send sound out the soundcard, talk to Direwolf or a Baofeng B-888, or anything.
+#  2020-10-15  msipin  Added consideration of altitude in APRS-announcement delay ("low" = faster).
 ###########################
 
 PATH=.:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/pifm
@@ -20,9 +23,16 @@ export PATH
 # Frequency in Megahertz (Mhz)
 #   E.G. 144.390 = Mhz FM (+/- a little offset...?)
 ##FREQ=144.394157		# Seems (visually on waterfall) properly centered - My and Eric's original "walkabout" tests used this
-FREQ=144.392929		# Tests in VVille, after St. Louis, and with replacement board xmitting 1229 Hz too high
-#FREQ=144.390		# Did *NOT* get decoded on direwolf...
+#FREQ=144.392929		# Tests in VVille, after St. Louis, and with replacement board xmitting 1229 Hz too high
+FREQ=144.390		# This works with PiFmAdv!
 #FREQ=144.3941		# CF with 0.100 divider may spread the inter-grouping signals out more like the real/live signals appear - St. Louis tests used this!
+
+# Pickup last-known-good altitude
+LAST_KNOWN_GOOD_DIR=/usr/local/bin
+#lat=$(cat ${LAST_KNOWN_GOOD_DIR}/lat | cut -f1 -d, | sed "s/\./ /g")
+#lon=$(cat ${LAST_KNOWN_GOOD_DIR}/lon | cut -f1 -d, | sed "s/\./ /g")
+alt=$(cat ${LAST_KNOWN_GOOD_DIR}/alt | cut -f1 -d, | sed "s/\./ /g" | awk '{ print $1 }')
+
 
 cd /home/pifm
 
@@ -31,30 +41,36 @@ do
 	/home/pifm/makePacket.sh -q >/dev/null
 
 	## Play packet (wav) file out via BCM built-in oscillator
-	##/home/pifm/pifm /home/pifm/packet.Loc.wav ${FREQ} 44100 mono 4 2>&1 > /dev/null
+	#/home/pifm/pifm /home/pifm/packet.Loc.wav ${FREQ} 44100 mono 4 2>&1 > /dev/null
+
+	## Play packet (wav) file out using PiFmAdv (which uses "better" code with built-in oscillator) -
+	pi_fm_adv --audio /home/pifm/packet.Loc.wav --freq ${FREQ} --dev 12.5 --cutoff 100000 --rds 0 -P 5000 --tp 0 2>&1 >/dev/null
 
 	## Play packet (wav) file out the PCM0/PCM1 audio output (feeds the Baofeng 888 microphone input)
 	##/usr/bin/aplay /home/pifm/packet.Loc.wav 2>&1 > /dev/null
 
 	# Give packet to Direwolf's "kissutil"
-	##tail -1 z.txt > /home/direwolf/outbox/z.txt
 	cp z.txt /home/direwolf/outbox
 
-	## LIVE VALUE -
-	##sleep 43 # Warpig-III value
-	##sleep 53 # Warpig-IV value
-	##sleep 97 # Warpig-V value
-	##sleep 97 # Warpig-VI value
-	##sleep 97 # Warpig-VII value
-	##sleep 97 # Warpig-VIII value
-	sleep 97 # Warpig-IX value
+	## Inter-announcement delay (without considering altitude) -
+	##sleep 97 # Warpig-IX value
+
+	# Altitude-based inter-announcement delay -
+	# Transmit QUICKER if balloon is below 10,000 ft (3,048 meters) and slower if above
+
+	#if [ 0 = 1 ]
+	if [ ""$alt"" -lt 3048 ]
+	then
+		# Balloon is ascending or descending, so REPEAT MORE QUICKLY!
+		sleep 27
+	else
+		# Balloon is at higher altitude, so take more time in between APRS announcements
+		sleep 97
+	fi
 
 	## TEST VALUE (SHORT) -
 	##sleep 11
-
 	## TEST VALUE (LOOOOOOOOONNNNNG) -
-	#sleep 193	# 3 minutes and 13 seconds
-	#sleep 251	# 4 minutes and 11 seconds
 	#sleep 293	# A few seconds shy of 5 minutes
 
 done
